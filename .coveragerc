@@ -1,0 +1,11 @@
+[report]
+show_missing = True
+
+[run]
+disable_warnings=include-ignored
+source = accessiplot
+include = */accessiplot/*
+omit =
+    */setup.py
+    */accessiplot/setup.py
+    */accessiplot/__init__.py

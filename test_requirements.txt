@@ -1,0 +1,6 @@
+pytest
+pytest-mpl 
+coverage 
+pytest-cov 
+codecov
+flake8
