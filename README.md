@@ -10,3 +10,8 @@ We need to install 3.8+ because we are forcing matplotlib 3.7.0+ which requires 
 `cd </path/to/repo/>`
 
 `python setup.py install`
+
+## Run tests
+
+From base of repo:
+`pytest accessiplot/`
