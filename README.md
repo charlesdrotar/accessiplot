@@ -16,4 +16,4 @@ We need to install 3.8+ because we are forcing matplotlib 3.7.0+ which requires 
 From base of repo:
 `pip install -r test_requirements.txt`
 
-`pytest -v --durations=20 --cov-config .coveragerc --cov accessiplot -p no:logging`
+`pytest -v --durations=20 --cov-config .coveragerc --cov accessiplot -p no:logging --cov-fail-under=85`
