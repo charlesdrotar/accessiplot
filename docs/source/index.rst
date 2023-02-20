@@ -1,5 +1,5 @@
 Welcome to accessiplot's documentation!
-===================================
+=======================================
 
 **accessiplot**  is a Python library for detecting accessibility issues in matplotlib plots.
 
