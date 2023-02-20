@@ -28,3 +28,11 @@ pip install -r test_requirements.txt
 
 pytest -v --durations=20 --cov-config .coveragerc --cov accessiplot -p no:logging --cov-fail-under=85
 ```
+
+## Build the docs
+
+From base of repo:
+
+```
+sphinx-build -b html docs/ docs/build/html
+```
