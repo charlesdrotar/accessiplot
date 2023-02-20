@@ -1,6 +1,6 @@
 # accessiplot
 
-[!Github Actions Status](https://github.com/charlesdrotar/accessiplot/actions/workflows/python-app.yml/badge.svg)
+![Github Actions Status](https://github.com/charlesdrotar/accessiplot/actions/workflows/python-app.yml/badge.svg)
 ![Supported versions](https://img.shields.io/badge/python-3.8+-blue.svg)
 [![Documentation Status](https://readthedocs.org/projects/accessiplot/badge/?version=latest)](https://accessiplot.readthedocs.io/en/latest/?badge=latest)
 
