@@ -1,46 +1,11 @@
 import numpy as np
-import sys, matplotlib
 import matplotlib.pyplot as plt
-from matplotlib import pyplot, cbook
 from matplotlib.colors import to_rgb
 import colorsys
 from colorthief import ColorThief
-import os
 
 from colorspacious import cspace_convert
 from colorspacious import deltaE
-
-
-# a bar chart for testing
-species = ("Adelie", "Chinstrap", "Gentoo")
-penguin_means = {
-    'Bill Depth': (18.35, 18.43, 14.98),
-    'Bill Length': (38.79, 48.83, 47.50),
-    'Flipper Length': (189.95, 195.82, 217.19),
-}
-
-x = np.arange(len(species))  # the label locations
-width = 0.25  # the width of the bars
-multiplier = 0
-
-fig, ax = plt.subplots(constrained_layout=True)
-
-for attribute, measurement in penguin_means.items():
-    offset = width * multiplier
-    rects = ax.bar(x + offset, measurement, width, label=attribute)
-    ax.bar_label(rects, padding=3)
-    multiplier += 1
-
-# Add some text for labels, title and custom x-axis tick labels, etc.
-ax.set_ylabel('Length (mm)')
-ax.set_title('Penguin attributes by species')
-ax.set_xticks(x + width, species)
-ax.legend(loc='upper left', ncols=3)
-ax.set_ylim(0, 250)
-
-file_name = "foo.jpg"
-
-plt.savefig(file_name)
 
 
 def get_common_colors_from_image(fn, top_count=6):
@@ -71,7 +36,8 @@ def convert_image(img, color_vision_deficiency="deuteranomaly", severity=100):
     Given an image,
     simulate how a person with color vision deficiency will see it.
     """
-    assert color_vision_deficiency in ["deuteranomaly", "protanomaly", "tritanomaly"]
+    assert color_vision_deficiency in ["deuteranomaly", "protanomaly",
+                                       "tritanomaly"]
     assert severity > 0 and severity <= 100
 
     cvd_space = {"name": "sRGB1+CVD",
@@ -93,44 +59,25 @@ def display_images(old, new):
     ax.imshow((np.column_stack((old,) + new)))
     plt.show()
 
-def compare_colors(colors, color_vision_deficiency="deuteranomaly", severity=100, threshold=30):
+
+def compare_colors(colors, color_vision_deficiency="deuteranomaly",
+                   severity=100, threshold=10):
     """
     Given a list of colors,
     check if any two of them are too similar to each other
     in the eye of someone with a specified color vision deficiency.
     """
 
-    assert color_vision_deficiency in ["deuteranomaly", "protanomaly", "tritanomaly"]
-    assert severity > 0 and severity <= 100
-
     colors_array = np.array(colors)
-    new_colors_array = convert_image(colors_array, color_vision_deficiency, severity)
-        
+    new_colors_array = convert_image(colors_array, color_vision_deficiency,
+                                     severity)
+
     for i in range(len(new_colors_array)):
         for j in range(i+1, len(new_colors_array)):
             c1 = new_colors_array[i]
             c2 = new_colors_array[j]
             delta = deltaE(c1, c2, input_space="sRGB255")
             if delta <= threshold:
+                print(c1)
+                print(c2)
                 print(delta)
-
-
-colors = [(11, 11, 11), (231, 116, 26), (242, 212, 175), (46, 161, 47), (30, 172, 36), (31, 120, 179)]
-compare_colors(colors)
-
-
-a_chart = plt.imread(file_name)
-
-colors = get_common_colors_from_image(file_name)
-print(colors)
-
-img1 = convert_image(a_chart)
-img2 = convert_image(a_chart, "tritanomaly", 100)
-
-display_images(a_chart, (img1, img2))
-
-
-plt.show()
-
-os.remove(file_name)
-print('eof')
