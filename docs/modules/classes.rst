@@ -28,3 +28,5 @@ The ``accessiplot.detection`` sub-module defines a set of tests of accessibility
     contrast_ratio.calculate_contrast_ratio
     contrast_ratio.calculate_relative_luminance
     contrast_ratio.normalize
+    label.get_labels
+    marker.get_markers
