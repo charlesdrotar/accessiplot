@@ -6,3 +6,4 @@ codecov
 flake8
 sphinx
 sphinx-rtd-theme
+numpydoc

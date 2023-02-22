@@ -3,9 +3,6 @@ Welcome to accessiplot's documentation!
 
 **accessiplot**  is a Python library for detecting accessibility issues in matplotlib plots.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
-
 .. note::
 
    This project is under active development.
@@ -14,6 +11,8 @@ Contents
 --------
 
 .. toctree::
+   :maxdepth: 2
+   :hidden:
 
-   usage
-   api
+   API Reference <./modules/classes.rst>
+   User Guide <./user_guide.rst>

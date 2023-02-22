@@ -1,5 +1,6 @@
 from matplotlib.colors import to_rgb
 
+
 def is_contrast_ratio_below_threshold(plt, contrast_ratio:float, threshold:float=2.5):
     """
     Pass in a contrast ratio and it will detect if it is below a limit.
@@ -18,8 +19,8 @@ def calculate_contrast_ratios_from_plt(plt):
     2) Get color of all lines as rgb and append to list
     3) Get color of the background and append to list
     4) Do an n**2 comparison of colors in the above list and generate contrast ratios
-       These are stored as key/value mappings where the key is 
-       `<index_color1>_<index_color2>`.
+    These are stored as key/value mappings where the key is 
+    `<index_color1>_<index_color2>`.
     """
     axes_object = plt.gca()
     lines_colors = [to_rgb(line.get_color()) for line in axes_object.lines]
@@ -49,14 +50,14 @@ def calculate_contrast_ratios_from_plt(plt):
     return contrast_ratios_by_index, lines_colors, detections
 
 
-def calculate_contrast_ratio(rgb1, rgb2):
+def calculate_contrast_ratio(self, rgb1, rgb2):
     """
     Returns contrast ratio of two rgb values
     using the relative luminances.
     """
 
-    l1 = calculate_relative_luminance(rgb1)
-    l2 = calculate_relative_luminance(rgb2)
+    l1 = self.calculate_relative_luminance(rgb1)
+    l2 = self.calculate_relative_luminance(rgb2)
 
     if l1 > l2:
         return (l1 + 0.05) / (l2 + 0.05)
@@ -64,7 +65,7 @@ def calculate_contrast_ratio(rgb1, rgb2):
         return (l2 + 0.05) / (l1 + 0.05)
 
 
-def calculate_relative_luminance(rgb:tuple):
+def calculate_relative_luminance(self, rgb:tuple):
     """
     Returns relative luminance of an rgb value. 
     This is used in the calculation of contrast ratios.
@@ -75,9 +76,9 @@ def calculate_relative_luminance(rgb:tuple):
     if (not 0.0 <= r <= 1.0) or (not 0.0 <= g <= 1.0) or (not 0.0 <= b <= 1.0):
         raise ValueError(f"The values of r:{r}, g:{g}, or b:{b} are not all within [0,1]!")
 
-    r = normalize(r)
-    g = normalize(g)
-    b = normalize(b)
+    r = self.normalize(r)
+    g = self.normalize(g)
+    b = self.normalize(b)
 
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 
@@ -91,5 +92,3 @@ def normalize(val:float):
         return val / 12.92
     else:
         return ((val + 0.055) / 1.055) ** 2.4
-
-    
