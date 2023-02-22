@@ -1,1 +1,4 @@
 matplotlib>=3.5.3
+numpydoc
+sphinx
+sphinx-rtd-theme

@@ -1,5 +1,6 @@
 from matplotlib.colors import to_rgb
 
+
 def is_contrast_ratio_below_threshold(plt, contrast_ratio:float, threshold:float=2.5):
     """
     Pass in a contrast ratio and it will detect if it is below a limit.
@@ -18,8 +19,8 @@ def calculate_contrast_ratios_from_plt(plt):
     2) Get color of all lines as rgb and append to list
     3) Get color of the background and append to list
     4) Do an n**2 comparison of colors in the above list and generate contrast ratios
-       These are stored as key/value mappings where the key is 
-       `<index_color1>_<index_color2>`.
+    These are stored as key/value mappings where the key is 
+    `<index_color1>_<index_color2>`.
     """
     axes_object = plt.gca()
     lines_colors = [to_rgb(line.get_color()) for line in axes_object.lines]
@@ -91,5 +92,3 @@ def normalize(val:float):
         return val / 12.92
     else:
         return ((val + 0.055) / 1.055) ** 2.4
-
-    

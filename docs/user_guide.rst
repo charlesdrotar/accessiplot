@@ -1,5 +1,7 @@
-Usage
-=====
+.. _user_guide:
+
+User Guide
+==========
 
 .. _installation:
 
