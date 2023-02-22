@@ -11,7 +11,6 @@ version = '0.0.1'
 
 import os
 import sys
-import accessiplot  # noqa
 import datetime
 import warnings
 
