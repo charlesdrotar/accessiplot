@@ -11,24 +11,60 @@ __all__ = [
 def is_contrast_ratio_below_threshold(plt, contrast_ratio:float, threshold:float=2.5):
     """
     Pass in a contrast ratio and it will detect if it is below a limit.
+    
+    Parameters
+    ----------
+    plt : matplotlib.plt
+        Matplotlib pyplot object
+    contrast_ratio : float
+        The contrast ratio calculated using the WCAG 2.0 definition.
+    threshold : float
+        Threshold to detect if the contrast ratio is below it.
+    
+    Returns
+    -------
+    is_below_threshold: bool
+        Result of comparison of threshold and contrast ratio.
     """
+
     #TODO: This needs a bit more love to detect what threshold to use automatically by context
+    is_below_threshold = False
+
     if contrast_ratio < threshold:
-        return True
-    else:
-        return False
+        is_below_threshold = True
+    return is_below_threshold
 
 
 def calculate_contrast_ratios_from_plt(plt):
     """
-    Generate a dictionary of contrast ratios from a plt object
+    Generates a dictionary of contrast ratios from a plt object,
+    the corresponding colors of the lines and background, and
+    a dictionary of comparisons that have a contrast ratio below
+    a given threshold.
+    
     1) Get axes object from plot object
     2) Get color of all lines as rgb and append to list
     3) Get color of the background and append to list
-    4) Do an n**2 comparison of colors in the above list and generate contrast ratios
-    These are stored as key/value mappings where the key is 
-    `<index_color1>_<index_color2>`.
+    4) Do an n**2 comparison of colors in the above list and generate contrast ratios. These are stored as key/value mappings where the key is `<index_color1>_<index_color2>`.
+
+    Parameters
+    ----------
+    plt : matplotlib.plt
+        Matplotlib pyplot object
+    
+    Returns
+    -------
+    contrast_ratios_by_index: dict
+        Dictionary where the key is the indices of the lines/background being compared
+        and the value is the contrast ratio as a float.
+    line_colors: list
+        List where each element is a tuple of `(r, g, b)` where `r`, `g`, and `b` are
+        normalized from the 0->255 value down to a 0->1 value.  
+    detections: dict
+        Dictionary where the key is the indices of the lines/background being compared
+        and the value is the contrast ratio as a float.
     """
+
     axes_object = plt.gca()
     lines_colors = [to_rgb(line.get_color()) for line in axes_object.lines]
     lines_colors.append(to_rgb(axes_object.get_facecolor()))
@@ -59,23 +95,73 @@ def calculate_contrast_ratios_from_plt(plt):
 
 def calculate_contrast_ratio(rgb1, rgb2):
     """
-    Returns contrast ratio of two rgb values
-    using the relative luminances.
+    Calculates the contrast ratio given two tuples of normalized rgb values.
+    These values must be in the range of [0,1].
+
+    Parameters
+    ----------
+    rgb1: tuple
+        A tuple of 3 values that are [0,1] which represent the normalized RGB
+        values converted from the 8-bit 0-255 representation.
+     rgb2: tuple
+        A tuple of 3 values that are [0,1] which represent the normalized RGB
+        values converted from the 8-bit 0-255 representation.   
+    
+    Returns
+    -------
+    contrast_ratio: float
+        Contrast ratio calculated from the relative luminance of two
+        normalized rgb tuples of values.
+
+    References
+    ----------
+    .. [1] https://www.w3.org/TR/WCAG20/#relativeluminancedef
+    .. [2] https://contrast-ratio.com/
+    .. [3] https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html
     """
 
     l1 = calculate_relative_luminance(rgb1)
     l2 = calculate_relative_luminance(rgb2)
 
     if l1 > l2:
-        return (l1 + 0.05) / (l2 + 0.05)
+        contrast_ratio =  (l1 + 0.05) / (l2 + 0.05)
     else:
-        return (l2 + 0.05) / (l1 + 0.05)
+        contrast_ratio =  (l2 + 0.05) / (l1 + 0.05)
+    
+    return contrast_ratio
 
 
 def calculate_relative_luminance(rgb:tuple):
     """
-    Returns relative luminance of an rgb value. 
-    This is used in the calculation of contrast ratios.
+    Calculates the relative luminance given a tuple of normalized rgb values.
+    These values must be in the range of [0,1]. This is used to calculate
+    contrast ratios.
+
+    Parameters
+    ----------
+    rgb: tuple
+        A tuple of 3 values that are [0,1] which represent the scaled RGB
+        values converted from the 8-bit 0-255 representation.
+ 
+    Returns
+    -------
+    relative_luminance: float
+        The light intensity of a given color value.
+
+    Notes
+    -----
+    Observing the coefficients in the formula helps to determine the
+    contributing effects of `r`, `g`, and `b` to relative luminance. We
+    can see that `g` gives the greatest contribution to relative luminance.
+
+    Raises
+    ------
+    ValueError
+        Raises if `r`, `g`, or `b` are not in a normalized [0,1] form.
+
+    References
+    ----------
+    .. [1] https://www.w3.org/TR/WCAG20/#relativeluminancedef
     """
 
     r,g,b = rgb
@@ -90,12 +176,29 @@ def calculate_relative_luminance(rgb:tuple):
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 
 
-def normalize(val:float):
+def normalize(primary_color:float):
     """
-    Normalize the R, G, or B value using the WCAG 2.0 formula defined
-    here - https://www.w3.org/TR/WCAG20/#relativeluminancedef
+    Normalize the , G, or B value using the WCAG 2.0 formula defined
+    for calculating the relative luminance.
+
+    Parameters
+    ----------
+    primary_color: float
+        Value for r, g, or b in the scaled in the range [0,1]
+ 
+    Returns
+    -------
+    normalized_color: float
+        Normalizes the value based on if it is `>0.03928` or not.
+
+    References
+    ----------
+    .. [1] https://www.w3.org/TR/WCAG20/#relativeluminancedef
     """
-    if val <= 0.03928:
-        return val / 12.92
+
+    if primary_color <= 0.03928:
+        normalized_color = primary_color / 12.92
     else:
-        return ((val + 0.055) / 1.055) ** 2.4
+        normalized_color = ((primary_color + 0.055) / 1.055) ** 2.4
+
+    return normalized_color
