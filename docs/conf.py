@@ -11,11 +11,9 @@ version = '0.0.1'
 
 import os
 import sys
-import datetime
-import warnings
 
 
-sys.path.insert(0, os.path.abspath('..' + os.path.sep))
+sys.path.insert(0, os.path.abspath('..' + os.path.sep ))
 sys.path.insert(0, os.path.abspath('sphinxext'))
 
 # -- General configuration
