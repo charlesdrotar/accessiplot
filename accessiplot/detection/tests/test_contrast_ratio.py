@@ -4,6 +4,7 @@ from matplotlib.colors import to_rgb
 from matplotlib import pyplot as plt
 from accessiplot.detection.contrast_ratio import *
 
+
 @pytest.mark.parametrize(
     'c1,c2, expected', [
         # Red vs. Blue, contrast ratio
