@@ -1,5 +1,6 @@
 .. _api_ref:
 
+*************
 API Reference
 *************
 
@@ -13,6 +14,7 @@ uses.
 
 .. _arima_ref:
 
+================================================================
 :mod:`accessiplot.detection`: Inaccessibility Detection of Plots
 ================================================================
 
@@ -20,6 +22,8 @@ The ``accessiplot.detection`` sub-module defines a set of tests of accessibility
 
 .. currentmodule:: accessiplot.detection
 
+Contrast Ratio Detection
+************************
 .. autosummary::
     :toctree: generated/
     :template: function.rst
@@ -28,5 +32,20 @@ The ``accessiplot.detection`` sub-module defines a set of tests of accessibility
     contrast_ratio.calculate_contrast_ratio
     contrast_ratio.calculate_relative_luminance
     contrast_ratio.normalize
+
+Missing Label Detection
+***********************
+
+.. autosummary::
+    :toctree: generated/
+    :template: function.rst
+
     label.get_labels
+
+Missing Marker Detection
+************************
+.. autosummary::
+    :toctree: generated/
+    :template: function.rst
+
     marker.get_markers
