@@ -77,7 +77,8 @@ epub_show_urls = 'footnote'
 sphinx_gallery_conf = {
     'doc_module': 'accessiplot',
     'backreferences_dir': os.path.join('modules', 'generated'),
-    'reference_url': {'accessiplot': None}
+    'reference_url': {'accessiplot': None},
+    'filename_pattern': '/example_',
 }
 
 def setup(app):
