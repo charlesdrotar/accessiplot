@@ -3,4 +3,3 @@ numpydoc
 sphinx
 sphinx-rtd-theme
 sphinx-gallery
-github_link
