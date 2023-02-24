@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Author: Charles Drotar <drotarcharles@gmail.com>
+# Author: Charles B Drotar <drotarcharles@gmail.com>
 #
 # Setup the accessiplot module. 
 
@@ -20,7 +20,7 @@ def do_setup():
     setup(name='accessiplot',
         version='0.0.1',
         description='Accessiblity accessor for Matplotlib plots',
-        author='Charles Drotar',
+        author='Charles B Drotar',
         author_email='drotarcharles@gmail.com',
         url='https://github.com/charlesdrotar/accessiplot',
         classifiers=[
@@ -34,7 +34,6 @@ def do_setup():
             'Operating System :: MacOS',
             'Programming Language :: Python',
             'Programming Language :: Python :: 3',
-            'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
             'Programming Language :: Python :: 3.10',

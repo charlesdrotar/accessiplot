@@ -103,7 +103,7 @@ def calculate_contrast_ratio(rgb1, rgb2):
     rgb1: tuple
         A tuple of 3 values that are [0,1] which represent the normalized RGB
         values converted from the 8-bit 0-255 representation.
-     rgb2: tuple
+    rgb2: tuple
         A tuple of 3 values that are [0,1] which represent the normalized RGB
         values converted from the 8-bit 0-255 representation.   
     
