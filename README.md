@@ -38,3 +38,11 @@ make clean html
 
 sphinx-build -b html docs/ docs/build/html
 ```
+
+## Check linting of files
+
+From base of repo:
+
+```
+flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+```
