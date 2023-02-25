@@ -2,7 +2,8 @@
 
 # -- Project information
 import datetime
-import sphinx_gallery
+import os
+import sys
 
 project = 'accessiplot'
 copyright = '2023, Charles B Drotar'
@@ -11,11 +12,7 @@ author = 'Charles B Drotar'
 release = '0.0.1'
 version = '0.0.1'
 
-import os
-import sys
-
-
-sys.path.insert(0, os.path.abspath('..' + os.path.sep ))
+sys.path.insert(0, os.path.abspath('..' + os.path.sep))
 sys.path.insert(0, os.path.abspath('sphinxext'))
 
 # -- General configuration
@@ -80,6 +77,7 @@ sphinx_gallery_conf = {
     'reference_url': {'accessiplot': None},
     'filename_pattern': '/example_',
 }
+
 
 def setup(app):
     def adds(pth):
