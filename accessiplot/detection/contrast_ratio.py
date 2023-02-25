@@ -82,7 +82,7 @@ def calculate_contrast_ratios_from_plt(plt):
         line1_ind, line2_ind = int(line1_ind_str), int(line2_ind_str)
         if line1_ind == line2_ind:
             continue  # Don't do self-analysis for contrast ratio.
-        if is_contrast_ratio_below_threshold(plt, contrast_ratios_by_index[key]):
+        if is_contrast_ratio_below_threshold(contrast_ratios_by_index[key]):
             # TODO: Need to do better handling of threshold based on plot
             detections[key] = contrast_ratios_by_index[key]
 
