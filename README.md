@@ -44,5 +44,5 @@ sphinx-build -b html docs/ docs/build/html
 From base of repo:
 
 ```
-flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
 ```
