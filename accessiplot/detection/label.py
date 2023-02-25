@@ -1,14 +1,14 @@
-import matplotlib
 
 __all__ = [
     'get_labels'
 ]
 
+
 def get_labels(plt):
     """
-    Dummy function to prove out retrieving a list of labels given a 
+    Dummy function to prove out retrieving a list of labels given a
     Matplotlib pyplot object.
-    
+
     Parameters
     ----------
     plt : matplotlib.plt
