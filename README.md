@@ -34,7 +34,7 @@ pytest -v --durations=20 --cov-config .coveragerc --cov accessiplot -p no:loggin
 From `docs/`:
 
 ```
-make clean html
+sphinx-build -b html docs/ docs/build/html
 
 make html
 ```
