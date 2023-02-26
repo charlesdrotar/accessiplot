@@ -36,7 +36,7 @@ From `docs/`:
 ```
 make clean html
 
-sphinx-build -b html docs/ docs/build/html
+sphinx-build -b html . ./build/html
 ```
 
 ## Check linting of files

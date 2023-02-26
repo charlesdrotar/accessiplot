@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from accessiplot.detection.marker import get_markers
 
 
-def test_contrast_ratio_detection_works():
+def test_marker_detection_works():
     # data to be plotted
     x = np.arange(1, 11)
     _ = np.array([100, 10, 300, 20, 500, 60, 700, 80, 900, 100])

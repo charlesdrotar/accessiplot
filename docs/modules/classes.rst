@@ -29,7 +29,7 @@ Contrast Ratio Detection
     :template: function.rst
 
     contrast_ratio.is_contrast_ratio_below_threshold
-    contrast_ratio.calculate_contrast_ratios_from_plt
+    contrast_ratio.calculate_contrast_ratios_from_ax
     contrast_ratio.calculate_contrast_ratio
     contrast_ratio.calculate_relative_luminance
     contrast_ratio.normalize

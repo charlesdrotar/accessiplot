@@ -2,7 +2,7 @@ from matplotlib.colors import to_rgb
 
 __all__ = [
     'is_contrast_ratio_below_threshold',
-    'calculate_contrast_ratios_from_plt',
+    'calculate_contrast_ratios_from_ax',
     'calculate_contrast_ratio',
     'calculate_relative_luminance',
     'normalize'
@@ -34,23 +34,22 @@ def is_contrast_ratio_below_threshold(contrast_ratio: float, threshold: float = 
     return is_below_threshold
 
 
-def calculate_contrast_ratios_from_plt(plt):
+def calculate_contrast_ratios_from_ax(ax):
     """
     Generates a dictionary of contrast ratios from a plt object,
     the corresponding colors of the lines and background, and
     a dictionary of comparisons that have a contrast ratio below
     a given threshold.
 
-    1) Get axes object from plot object
-    2) Get color of all lines as rgb and append to list
-    3) Get color of the background and append to list
-    4) Do an n**2 comparison of colors in the above list and generate contrast ratios.
+    1) Get color of all lines as rgb and append to list
+    2) Get color of the background and append to list
+    3) Do an n**2 comparison of colors in the above list and generate contrast ratios.
        These are stored as key/value mappings where the key is `<index_color1>_<index_color2>`.
 
     Parameters
     ----------
-    plt : matplotlib.plt
-        Matplotlib pyplot object
+    ax : matplotlib.axes
+        Matplotlib Axes object
 
     Returns
     -------
@@ -65,9 +64,8 @@ def calculate_contrast_ratios_from_plt(plt):
         and the value is the contrast ratio as a float.
     """
 
-    axes_object = plt.gca()
-    lines_colors = [to_rgb(line.get_color()) for line in axes_object.lines]
-    lines_colors.append(to_rgb(axes_object.get_facecolor()))
+    lines_colors = [to_rgb(line.get_color()) for line in ax.lines]
+    lines_colors.append(to_rgb(ax.get_facecolor()))
 
     contrast_ratios_by_index = {}
     detections = {}
