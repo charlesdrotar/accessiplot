@@ -4,5 +4,5 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "accessiplot"
-authors = [{name = "Charles Drotar", email = "drotarcharles@gmail.com"}]
+authors = [{name = "Charles B Drotar", email = "drotarcharles@gmail.com"}]
 dynamic = ["version", "description"]

@@ -31,8 +31,18 @@ pytest -v --durations=20 --cov-config .coveragerc --cov accessiplot -p no:loggin
 
 ## Build the docs
 
+From `docs/`:
+
+```
+make clean html
+
+sphinx-build -b html . ./build/html
+```
+
+## Check linting of files
+
 From base of repo:
 
 ```
-sphinx-build -b html docs/ docs/build/html
+flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
 ```
