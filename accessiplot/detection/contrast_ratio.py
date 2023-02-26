@@ -1,4 +1,3 @@
-import matplotlib
 from matplotlib.colors import to_rgb
 
 __all__ = [
@@ -35,7 +34,7 @@ def is_contrast_ratio_below_threshold(contrast_ratio: float, threshold: float = 
     return is_below_threshold
 
 
-def calculate_contrast_ratios_from_ax(ax: matplotlib.axes):
+def calculate_contrast_ratios_from_ax(ax):
     """
     Generates a dictionary of contrast ratios from a plt object,
     the corresponding colors of the lines and background, and

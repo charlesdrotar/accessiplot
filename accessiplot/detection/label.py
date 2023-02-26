@@ -1,11 +1,10 @@
-import matplotlib
 
 __all__ = [
     'get_labels'
 ]
 
 
-def get_labels(ax: matplotlib.axes):
+def get_labels(ax):
     """
     Dummy function to prove out retrieving a list of labels given a
     Matplotlib pyplot object.
