@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.colors import to_rgb
 from matplotlib import pyplot as plt
 from accessiplot.detection.contrast_ratio import calculate_contrast_ratio, \
-    calculate_contrast_ratios_from_plt
+    calculate_contrast_ratios_from_ax
 
 
 @pytest.mark.parametrize(
@@ -31,11 +31,15 @@ def test_contrast_ratio_detection_works():
     x = np.arange(1, 11)
     _ = np.array([100, 10, 300, 20, 500, 60, 700, 80, 900, 100])
     num_lines = 10
+
+    # Reset the figure so that tests start with a fresh figure.
+    _ = plt.figure()
+    ax = plt.axes()
     for _ in range(num_lines):
         y_val = (np.random.rand(1, 10)).T
-        plt.plot(x, y_val)
+        ax.plot(x, y_val)
 
-    _, _, _ = calculate_contrast_ratios_from_plt(plt)
+    _, _, _ = calculate_contrast_ratios_from_ax(ax)
 
     # TODO: Do an adequate assertion on the values and parameterize appropriately
     assert True
