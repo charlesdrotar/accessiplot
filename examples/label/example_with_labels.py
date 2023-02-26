@@ -2,7 +2,7 @@
 ===============================
 Labels Present Shows Detections
 ===============================
-This example shows that all labels were detected 
+This example shows that all labels were detected
 and none were found to be missing.
 """
 import numpy as np
