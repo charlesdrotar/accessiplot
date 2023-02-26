@@ -16,3 +16,4 @@ Contents
 
    API Reference <./modules/classes.rst>
    User Guide <./user_guide.rst>
+   Examples <./auto_examples/index.rst>
