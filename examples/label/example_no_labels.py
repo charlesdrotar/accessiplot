@@ -17,15 +17,18 @@ labels = ['_child0', '_child1', '', '']
 # data to be plotted
 x = np.arange(1, 11)
 
+_ = plt.figure()
+ax = plt.axes()
+
 # Reset the figure so that tests start with a fresh figure.
 for _ in range(num_lines):
     y_val = (np.random.rand(1, 10)).T
-    plt.plot(x, y_val, label=labels[_])
+    ax.plot(x, y_val, label=labels[_])
 
-plt.xlabel = labels[-2]
-plt.ylabel = labels[-1]
+ax.set_xlabel(labels[-2])
+ax.set_ylabel(labels[-1])
 
-_, x_label, y_label, detections = get_labels(ax=plt.gca())
+_, x_label, y_label, detections = get_labels(ax=ax)
 
 print("detections:", detections)
 
