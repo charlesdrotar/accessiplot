@@ -34,9 +34,9 @@ pytest -v --durations=20 --cov-config .coveragerc --cov accessiplot -p no:loggin
 From `docs/`:
 
 ```
-sphinx-build -b html docs/ docs/build/html
+make clean html
 
-make html
+sphinx-build -b html . ./build/html
 ```
 
 ## Check linting of files
