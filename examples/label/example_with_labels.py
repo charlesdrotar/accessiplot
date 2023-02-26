@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 from accessiplot.detection.label import get_labels
 
 num_lines = 2
-labels = ['_child0', '_child1', '', '']
+labels = ['plot0', 'plot1', 'x', 'y']
 
 # data to be plotted
 x = np.arange(1, 11)
