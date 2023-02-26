@@ -27,6 +27,6 @@ plt.ylabel = labels[-1]
 
 _, x_label, y_label, detections = get_labels(ax=plt.gca())
 
-print(detections)
+print("detections:", detections)
 
 plt.show()
