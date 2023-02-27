@@ -83,6 +83,7 @@ sphinx_gallery_conf = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+
 def setup(app):
     def adds(pth):
         print("Adding stylesheet: %s" % pth)
