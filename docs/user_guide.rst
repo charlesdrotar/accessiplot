@@ -8,4 +8,8 @@ User Guide
 Installation
 ------------
 
-Fill this out.
+.. toctree::
+   :numbered:
+   :maxdepth: 2
+
+   contributing.rst

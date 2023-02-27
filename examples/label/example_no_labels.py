@@ -7,6 +7,7 @@ as well as the x and y labels of the axes themselves.
 
 The default values assigned by labels are defined in `labels`.
 """
+
 import numpy as np
 from matplotlib import pyplot as plt
 from accessiplot.detection.label import get_labels
