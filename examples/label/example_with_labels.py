@@ -1,10 +1,11 @@
 """
-===============================
+=================================
 Labels Present Shows 0 Detections
-===============================
+=================================
 This example shows that all labels were detected
 and none were found to be missing.
 """
+
 import numpy as np
 from matplotlib import pyplot as plt
 from accessiplot.detection.label import get_labels
