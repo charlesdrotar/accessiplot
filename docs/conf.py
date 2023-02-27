@@ -67,7 +67,10 @@ templates_path = ['_templates']
 
 # -- Options for HTML output
 
+# https://pydata-sphinx-theme.readthedocs.io/en/stable/user_guide/accessibility.html
 html_theme = 'pydata_sphinx_theme'
+# html_theme = 'sphinx_rtd_theme'
+
 
 html_theme_options = {
    "logo": {
