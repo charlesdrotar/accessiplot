@@ -56,7 +56,6 @@ def get_common_colors_from_plot(plot):
     colors: list
         A list of colors in the image.
     """
-
     axes_object = plt.gca()
     lines_colors = [to_rgb(line.get_color()) for line in axes_object.lines]
     lines_colors.append(to_rgb(axes_object.get_facecolor()))
@@ -123,7 +122,7 @@ def display_images(old, new):
 
 
 def compare_colors(colors, color_vision_deficiency="deuteranomaly",
-                   severity=100, threshold=10):
+                   severity=100, threshold=6):
 
     """
     Given a list of colors,
@@ -142,19 +141,42 @@ def compare_colors(colors, color_vision_deficiency="deuteranomaly",
         The severity of color vision deficiency to be simulated,
         with 100 being the most severe one.
     threshold: int
-        Threshold to detect if the Euclidean Distance between two colors
+        Threshold to detect if the Dealta-E value between two colors
         is below it.
+        
+    Returns
+    -------
+    flag: bool
+        Whether or not there exists a pair of colors in the given list
+        that are too similar to each other.
+        
+    References
+    -------
+    .. [1] https://www.colorwiki.com/wiki/Delta_E
+    
     """
 
     colors_array = np.array(colors)
     new_colors_array = convert_image(colors_array, color_vision_deficiency,
                                      severity)
 
+    count = 0
     for i in range(len(new_colors_array)):
         for j in range(i+1, len(new_colors_array)):
             c1 = new_colors_array[i]
             c2 = new_colors_array[j]
             delta = deltaE(c1, c2, input_space="sRGB255")
             if delta <= threshold:
-                print('Those colors are too close to each other: '
-                      + str(c1) + ' and ' + str(c2))
+                print(delta)
+                if count == 0:
+                    print("For a person with {color_vision_deficiency}, those colors are too close to each other: ".format(color_vision_deficiency = color_vision_deficiency))
+                print(str(c1) + ' and ' + str(c2))
+                # TODO: add a parameter for detecting the markers / labels
+                count = count + 1
+    flag = count != 0
+    if not flag:
+        pass # TODO: should we print out a message saying everything is good?
+    else:
+        print("Ignore this warnings if for each line, the markers are different or the labels are present.")
+    return flag
+    
