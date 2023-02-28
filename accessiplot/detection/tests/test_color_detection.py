@@ -44,9 +44,10 @@ def test_get_common_colors_from_plot():
     y = np.array([100, 10, 300, 20, 500])
     num_lines = 5
     colors = [(168, 96, 50), (66, 135, 245), (183, 65, 191), (123, 186, 127), (100, 100, 100)]
+    colors = cspace_convert(colors, "sRGB255", "sRGB1")
     for i in range(num_lines):
         y_val = (np.random.rand(1,5)).T
-        plt.plot(x, y_val, color=(colors[i][0] / 255, colors[i][1] / 255, colors[i][2] / 255))
+        plt.plot(x, y_val, color=(colors[i][0], colors[i][1], colors[i][2]))
     
     actual = get_common_colors_from_plot(plt, )
 
@@ -60,6 +61,7 @@ def test_get_common_colors_from_plot():
 def test_convert_image():
     
     colors1 = [(11, 11, 11), (100, 100, 100), (255, 255, 255)]
+    colors1 = cspace_convert(colors1, "sRGB255", "sRGB1")
     result_colors1 = convert_image(colors1, "protanomaly", 50)
     
     flag1 = True
@@ -70,7 +72,8 @@ def test_convert_image():
     
     file_name = "grace_hopper.jpg"
     hopper_sRGB = plt.imread(matplotlib.cbook.get_sample_data(file_name))
-    
+    hopper_sRGB = cspace_convert(hopper_sRGB, "sRGB255", "sRGB1")
+
     img1 = convert_image(hopper_sRGB)
     img2 = convert_image(hopper_sRGB, "tritanomaly", 100)
     
@@ -87,10 +90,12 @@ def test_convert_image():
 def test_compare_colors():
     colors1 = [(11, 11, 11), (231, 116, 26), (242, 212, 175), (46, 161, 47), (30, 172, 36), (31, 120, 179)]
     flag1 = compare_colors(colors1)
+    colors1 = cspace_convert(colors1, "sRGB255", "sRGB1")
     assert flag1
     
     # those are black / white / gray, so they should not be too similar to each other
     colors2 = [(11, 11, 11), (100, 100, 100), (255, 255, 255)]
+    colors2 = cspace_convert(colors2, "sRGB255", "sRGB1")
     flag2 = compare_colors(colors2, "protanomaly", 50)
     assert not flag2
     

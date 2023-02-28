@@ -1,6 +1,8 @@
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 from matplotlib.colors import to_rgb
+import matplotlib
 import colorsys
 from colorthief import ColorThief
 
@@ -31,13 +33,13 @@ def get_common_colors_from_image(file_name: str, top_count: int = 6):
     Returns
     -------
     palette: list
-        A list of most commonly used colors in the image,
-        sorted by their RGB values.
+        A list of most commonly used colors in the image.
     """
 
     color_thief = ColorThief(file_name)
     palette = color_thief.get_palette(color_count=top_count)
     palette.sort(key=lambda rgb: colorsys.rgb_to_hsv(*rgb))
+    palette = cspace_convert(palette, "sRGB255", "sRGB1")
     return palette
 
 
@@ -53,15 +55,14 @@ def get_common_colors_from_plot(plot):
 
     Returns
     -------
-    colors: list
+    lines_colors: list
         A list of colors in the image.
     """
     axes_object = plt.gca()
     lines_colors = [to_rgb(line.get_color()) for line in axes_object.lines]
     lines_colors.append(to_rgb(axes_object.get_facecolor()))
-    colors = [(round(x[0] * 255), round(x[1] * 255), round(x[2] * 255))
-              for x in lines_colors]
-    return colors
+    lines_colors = cspace_convert(lines_colors, "sRGB1", "sRGB1")
+    return lines_colors
 
 
 def convert_image(img, color_vision_deficiency="deuteranomaly", severity=100):
@@ -89,12 +90,12 @@ def convert_image(img, color_vision_deficiency="deuteranomaly", severity=100):
     assert color_vision_deficiency in ["deuteranomaly", "protanomaly",
                                        "tritanomaly"]
     assert severity > 0 and severity <= 100
-
+    
     cvd_space = {"name": "sRGB1+CVD",
                  "cvd_type": color_vision_deficiency,
                  "severity": severity}
 
-    result_image = cspace_convert(img, cvd_space, "sRGB1").astype('uint8')
+    result_image = cspace_convert(img, cvd_space, "sRGB1")#.astype('uint8')
     return result_image
 
 
@@ -111,7 +112,7 @@ def display_images(old, new):
         A tuple of array-like of colors, 
         each representing an image.
     """
-
+    
     image_width = 3.0  # inches
     total_width = (1 + len(new)) * image_width
     height = image_width / old.shape[1] * old.shape[0]
@@ -165,7 +166,7 @@ def compare_colors(colors, color_vision_deficiency="deuteranomaly",
         for j in range(i+1, len(new_colors_array)):
             c1 = new_colors_array[i]
             c2 = new_colors_array[j]
-            delta = deltaE(c1, c2, input_space="sRGB255")
+            delta = deltaE(c1, c2, input_space="sRGB1")
             if delta <= threshold:
                 print(delta)
                 if count == 0:
@@ -179,4 +180,3 @@ def compare_colors(colors, color_vision_deficiency="deuteranomaly",
     else:
         print("Ignore this warnings if for each line, the markers are different or the labels are present.")
     return flag
-    
