@@ -56,7 +56,7 @@ def get_common_colors_from_plot(plot):
     Returns
     -------
     lines_colors: list
-        A list of colors in the image.
+        A list of colors used for the lines in the plot.
     """
     axes_object = plt.gca()
     lines_colors = [to_rgb(line.get_color()) for line in axes_object.lines]
@@ -65,7 +65,7 @@ def get_common_colors_from_plot(plot):
     return lines_colors
 
 
-def convert_image(img, color_vision_deficiency="deuteranomaly", severity=100):
+def convert_image(img, color_vision_deficiency: str ="deuteranomaly", severity: int = 100):
     """
     Given an image,
     simulate how a person with color vision deficiency will see it.
@@ -122,8 +122,8 @@ def display_images(old, new):
     plt.show()
 
 
-def compare_colors(colors, color_vision_deficiency="deuteranomaly",
-                   severity=100, threshold=6):
+def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
+                   severity: int = 100, threshold: int = 6):
 
     """
     Given a list of colors,
@@ -180,3 +180,49 @@ def compare_colors(colors, color_vision_deficiency="deuteranomaly",
     else:
         print("Ignore this warnings if for each line, the markers are different or the labels are present.")
     return flag
+
+
+def full_detection(plt, threshold: int = 6):
+
+    """
+    Given a line chart,
+    detect if its use of color is unfriendly to people with
+    either deuteranomaly, protanomaly or tritanomaly,
+    and display the simulation for those color vision deficiencies.
+
+    Parameters
+    ----------
+    plt : matplotlib.pyplot
+        A matplotlib.pyplot object in which a line chart is plotted.
+    threshold: int
+        Threshold to detect if the Dealta-E value between two colors
+        is below it.
+
+    Returns
+    -------
+    flag: bool
+        Whether or not there exists a pair of colors in the given list
+        that are too similar to each other.
+    """
+    
+    file_name = "test.jpg"
+    plt.savefig(file_name)
+    
+    img = cspace_convert(plt.imread(file_name), "sRGB255", "sRGB1")
+    print(np.unique(img))
+    
+    cvd_list = ["deuteranomaly", "protanomaly", "tritanomaly"]
+    colors = get_common_colors_from_plot(plt)
+    simulations = []
+
+    flag = False
+    for i in cvd_list:
+        flag = flag or compare_colors(colors, i, 100, threshold)
+        new_img = convert_image(img, i, 100)
+        #print(np.unique(new_img))
+        simulations.append(new_img)
+    
+    display_images(img, tuple(simulations))
+    os.remove(file_name)
+    return flag
+
