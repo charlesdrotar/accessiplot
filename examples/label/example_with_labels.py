@@ -8,7 +8,7 @@ and none were found to be missing.
 
 import numpy as np
 from matplotlib import pyplot as plt
-from accessiplot.detection.label import get_labels
+from accessiplot.detection.handler import DetectionHandler, DetectionTypes
 
 num_lines = 2
 labels = ['plot0', 'plot1', 'x', 'y']
@@ -27,8 +27,9 @@ for _ in range(num_lines):
 ax.set_xlabel(labels[-2])
 ax.set_ylabel(labels[-1])
 
-_, x_label, y_label, detections = get_labels(ax=ax)
+dh = DetectionHandler(ax=ax)
+dh.run_detections(run_detections_list=[DetectionTypes.LABEL.name])
 
-print("detections:", detections)
+print("detections:", dh.detections)
 
 plt.show()
