@@ -54,8 +54,9 @@ def test_get_common_colors_from_plot():
 
     flag = True
     for i in colors:
-        truth_table = [i in a for a in actual]
-        flag = flag and np.all(truth_table)
+        if np.any(i in actual):
+            flag = False
+            break
     assert flag
 
 
@@ -83,7 +84,7 @@ def test_convert_image():
 
     plt.show()
 
-    os.remove(file_name)
+    # os.remove(file_name)
 
     # There is some problem with this function that I need to fix,
     # but will save it for now.
