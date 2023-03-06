@@ -8,7 +8,7 @@ using the `accessiplot.detection.contrast_ratio` module.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from accessiplot.detection.contrast_ratio import calculate_contrast_ratios_from_ax
+from accessiplot.detection.handler import DetectionHandler, DetectionTypes
 
 # data to be plotted
 x = np.arange(1, 11)
@@ -22,10 +22,11 @@ for i in range(num_lines):
     y_val = (np.random.rand(1, 10)).T
     ax.plot(x, y_val)
 
-contrast_ratios_dict, line_colors, detections = calculate_contrast_ratios_from_ax(ax)
+dh = DetectionHandler(ax=ax)
+dh.run_detections(run_detections_list=[DetectionTypes.CONTRAST_RATIO.name])
 
-print("contrast_ratios_dict:", contrast_ratios_dict)
+print("contrast_ratios_by_index:", dh.contrast_ratios_by_index)
 
-print("line_colors:", line_colors)
+print("colors_by_index:", dh.colors_by_index)
 
-print("detections:", detections)
+print("detections:", dh.detections)

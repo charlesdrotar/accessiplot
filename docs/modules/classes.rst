@@ -12,8 +12,6 @@ function raw specifications may not be enough to give full guidelines on their
 uses.
 
 
-.. _arima_ref:
-
 ================================================================
 :mod:`accessiplot.detection`: Inaccessibility Detection of Plots
 ================================================================
@@ -41,7 +39,7 @@ Missing Label Detection
     :toctree: generated/
     :template: function.rst
 
-    label.get_labels
+    label.get_missing_labels_from_ax
 
 Missing Marker Detection
 ************************
@@ -50,3 +48,39 @@ Missing Marker Detection
     :template: function.rst
 
     marker.get_markers
+
+
+Detection Handler Classes
+*************************
+
+.. autosummary::
+    :toctree: generated/
+    :template: class.rst
+
+    handler.DetectionHandler
+    handler.DetectionTypes
+
+
+=======================================================
+:mod:`accessiplot.utils`: Utility Functions and Classes
+=======================================================
+
+.. currentmodule:: accessiplot.utils
+
+Chart Type Enum
+****************
+
+.. autosummary::
+    :toctree: generated/
+    :template: class.rst
+
+    chart_type.ChartTypes
+
+
+Chart Type Detection
+********************
+.. autosummary::
+    :toctree: generated/
+    :template: function.rst
+    
+    chart_type.determine_chart_type
