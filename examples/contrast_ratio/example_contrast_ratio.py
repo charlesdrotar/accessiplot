@@ -25,7 +25,7 @@ for i in range(num_lines):
 dh = DetectionHandler(ax=ax)
 dh.run_detections(run_detections_list=[DetectionTypes.CONTRAST_RATIO.name])
 
-print("contrast_ratios_dict:", dh.contrast_ratios_dict)
+print("contrast_ratios_by_index:", dh.contrast_ratios_by_index)
 
 print("colors_by_index:", dh.colors_by_index)
 
