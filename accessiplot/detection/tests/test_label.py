@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 from matplotlib import pyplot as plt
-from accessiplot.detection.label import get_labels
+from accessiplot.detection.handler import DetectionHandler, DetectionTypes
 
 
 @pytest.mark.parametrize(
@@ -26,7 +26,7 @@ from accessiplot.detection.label import get_labels
         )
     ]
 )
-def test_label_detection(num_lines, labels, expected):
+def test_label_detection_lines(num_lines, labels, expected):
     # data to be plotted
     x = np.arange(1, 11)
 
@@ -41,11 +41,51 @@ def test_label_detection(num_lines, labels, expected):
 
     ax.set_xlabel(labels[-2])
     ax.set_ylabel(labels[-1])
-    print(ax.get_xlabel(), ax.get_ylabel())
+    dh = DetectionHandler(ax=ax)
+    dh.run_detections(run_detections_list=[DetectionTypes.LABEL.name])
 
-    _, x_label, y_label, detections = get_labels(ax=ax)
+    print(dh.detections, expected)
+    assert dh.detections['label'] == expected
 
-    print(detections, expected)
-    assert x_label == ax.get_xlabel()
-    assert y_label == ax.get_ylabel()
-    assert detections == expected
+
+@pytest.mark.parametrize(
+    'labels, expected', [
+        # Empty labels
+        pytest.param(
+            ['', ''],
+            {
+                'bins': {},
+                'axes': {'x': '', 'y': ''}
+            }
+        ),
+        # All labels present
+        pytest.param(
+            ['x', 'y'],
+            {
+                'bins': {},
+                'axes': {}
+            }
+        )
+    ]
+)
+def test_label_detection_histogram(labels, expected):
+    # Creating dataset
+    a = np.array([22, 87, 5, 43, 56,
+                  73, 55, 54, 11,
+                  20, 51, 5, 79, 31,
+                  27])
+
+    # Creating histogram
+    _, ax = plt.subplots(figsize=(10, 7))
+    h = ax.hist(a, bins=[0, 25, 50, 75, 100])
+    dh = DetectionHandler(ax=ax, histogram=h)
+
+    # Set axes labels for testing
+
+    ax.set_xlabel(labels[-2])
+    ax.set_ylabel(labels[-1])
+    dh = DetectionHandler(ax=ax)
+    dh.run_detections(run_detections_list=[DetectionTypes.LABEL.name])
+
+    print(dh.detections, expected)
+    assert dh.detections['label'] == expected

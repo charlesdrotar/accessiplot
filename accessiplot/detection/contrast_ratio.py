@@ -1,8 +1,13 @@
 from matplotlib.colors import to_rgb
+import warnings
+from accessiplot.utils.chart_type import ChartTypes
+from accessiplot.detection.handler import DetectionHandler
 
 __all__ = [
     'is_contrast_ratio_below_threshold',
     'calculate_contrast_ratios_from_ax',
+    'calculate_contrast_ratio_histogram',
+    'calculate_contrast_ratio_lines',
     'calculate_contrast_ratio',
     'calculate_relative_luminance',
     'normalize'
@@ -34,22 +39,60 @@ def is_contrast_ratio_below_threshold(contrast_ratio: float, threshold: float = 
     return is_below_threshold
 
 
-def calculate_contrast_ratios_from_ax(ax):
+def calculate_contrast_ratios_from_ax(dh: DetectionHandler):
     """
-    Generates a dictionary of contrast ratios from a plt object,
+    Generates dictionaries of the contrast_ratios_by_index and detections.
+    Also a list of colors_by_index is generated to keep track of the colors
+    that are associated with the contrast ratios.
+    It determines the processing logic based on the chart type from the
+    DetectionHandler object.
+
+    Parameters
+    ----------
+    dh : accessiplot.detection.handler.DetectionHandler
+        A DetectionHandler object that contains the axes object and histogram object if necessary.
+
+    Returns
+    -------
+    contrast_ratios_by_index: dict
+        Dictionary where the key is the indices of the lines/background being compared
+        and the value is the contrast ratio as a float.
+    colors_by_index: list
+        List where each element is a tuple of `(r, g, b)` where `r`, `g`, and `b` are
+        normalized from the 0->255 value down to a 0->1 value.
+    detections: dict
+        Dictionary where the key is the indices of the lines/background being compared
+        and the value is the contrast ratio as a float.
+    """
+    contrast_ratios_by_index = {}
+    colors_by_index = []
+    detections = {}
+
+    if dh.chart_type == ChartTypes.LINE_CHART.name:
+        contrast_ratios_by_index, colors_by_index, detections = calculate_contrast_ratio_lines(dh)
+    elif dh.chart_type == ChartTypes.HISTOGRAM.name:
+        contrast_ratios_by_index, colors_by_index, detections = calculate_contrast_ratio_histogram(dh)
+    else:
+        warnings.warn(f"chart_type:{dh.chart_type} is unsupported! Returning dummy values for analysis")
+    return contrast_ratios_by_index, colors_by_index, detections
+
+
+def calculate_contrast_ratio_histogram(dh: DetectionHandler):
+    """
+    Generates a dictionary of contrast ratios from an Axes object,
     the corresponding colors of the lines and background, and
     a dictionary of comparisons that have a contrast ratio below
     a given threshold.
 
-    1) Get color of all lines as rgb and append to list
+    1) Get color of all bins as rgb and append to list
     2) Get color of the background and append to list
     3) Do an n**2 comparison of colors in the above list and generate contrast ratios.
        These are stored as key/value mappings where the key is `<index_color1>_<index_color2>`.
 
     Parameters
     ----------
-    ax : matplotlib.axes
-        Matplotlib Axes object
+    dh : accessiplot.detection.handler.DetectionHandler
+        A DetectionHandler object that contains the axes object and histogram object if necessary.
 
     Returns
     -------
@@ -63,28 +106,87 @@ def calculate_contrast_ratios_from_ax(ax):
         Dictionary where the key is the indices of the lines/background being compared
         and the value is the contrast ratio as a float.
     """
+    if dh.histogram is None:
+        warnings.warn("The DetectionHandler object does not have histogram metadata associated with it."
+                      "Skipping histogram processing.")
+        return {}, [], {}
 
-    lines_colors = [to_rgb(line.get_color()) for line in ax.lines]
-    lines_colors.append(to_rgb(ax.get_facecolor()))
+    colors = []
+    for rect in dh.histogram[2]:
+        rect_color = rect.get_facecolor()
+        if rect_color not in colors:
+            colors.append(to_rgb(rect_color))
+
+    colors.append(to_rgb(dh.ax.get_facecolor()))
 
     contrast_ratios_by_index = {}
     detections = {}
 
-    for i in range(len(lines_colors)):
-        for j in range(len(lines_colors)):
+    for i in range(len(colors)):
+        for j in range(len(colors)):
             contrast_ratios_by_index[f'{i}_{j}'] = \
-                calculate_contrast_ratio(lines_colors[i], lines_colors[j])
+                calculate_contrast_ratio(colors[i], colors[j])
 
     for key in contrast_ratios_by_index.keys():
-        line1_ind_str, line2_ind_str = key.split("_")
-        line1_ind, line2_ind = int(line1_ind_str), int(line2_ind_str)
-        if line1_ind == line2_ind:
+        ind_str1, ind_str2 = key.split("_")
+        if ind_str1 == ind_str2:
             continue  # Don't do self-analysis for contrast ratio.
         if is_contrast_ratio_below_threshold(contrast_ratios_by_index[key]):
             # TODO: Need to do better handling of threshold based on plot
             detections[key] = contrast_ratios_by_index[key]
 
-    return contrast_ratios_by_index, lines_colors, detections
+    return contrast_ratios_by_index, colors, detections
+
+
+def calculate_contrast_ratio_lines(dh: DetectionHandler):
+    """
+    Generates a dictionary of contrast ratios from an Axes object,
+    the corresponding colors of the lines and background, and
+    a dictionary of comparisons that have a contrast ratio below
+    a given threshold.
+
+    1) Get color of all lines as rgb and append to list
+    2) Get color of the background and append to list
+    3) Do an n**2 comparison of colors in the above list and generate contrast ratios.
+       These are stored as key/value mappings where the key is `<index_color1>_<index_color2>`.
+
+    Parameters
+    ----------
+    dh : accessiplot.detection.handler.DetectionHandler
+        A DetectionHandler object that contains the axes object and histogram object if necessary.
+
+    Returns
+    -------
+    contrast_ratios_by_index: dict
+        Dictionary where the key is the indices of the lines/background being compared
+        and the value is the contrast ratio as a float.
+    line_colors: list
+        List where each element is a tuple of `(r, g, b)` where `r`, `g`, and `b` are
+        normalized from the 0->255 value down to a 0->1 value.
+    detections: dict
+        Dictionary where the key is the indices of the lines/background being compared
+        and the value is the contrast ratio as a float.
+    """
+    colors = [to_rgb(line.get_color()) for line in dh.ax.lines]
+    colors.append(to_rgb(dh.ax.get_facecolor()))
+
+    contrast_ratios_by_index = {}
+    detections = {}
+
+    for i in range(len(colors)):
+        for j in range(len(colors)):
+            contrast_ratios_by_index[f'{i}_{j}'] = \
+                calculate_contrast_ratio(colors[i], colors[j])
+
+    for key in contrast_ratios_by_index.keys():
+        ind_str1, ind_str2 = key.split("_")
+        if ind_str1 == ind_str2:
+            continue  # Don't do self-analysis for contrast ratio.
+        if is_contrast_ratio_below_threshold(contrast_ratios_by_index[key]):
+            # TODO: Need to do better handling of threshold based on plot
+            detections[key] = contrast_ratios_by_index[key]
+
+    return contrast_ratios_by_index, colors, detections
 
 
 def calculate_contrast_ratio(rgb1, rgb2):
