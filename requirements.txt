@@ -1,1 +1,4 @@
 matplotlib>=3.7.0
+colorthief>=0.2.1
+colorspacious>=1.1.2
+pae>=1.0.0

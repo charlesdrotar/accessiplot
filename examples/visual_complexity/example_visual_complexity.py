@@ -14,9 +14,9 @@ x = np.arange(1, 6)
 y = np.array([100, 10, 300, 20, 500])
 num_lines = 5
 for i in range(num_lines):
-    y_val = (np.random.rand(1,5)).T
+    y_val = (np.random.rand(1, 5)).T
     plt.plot(x, y_val)
-    
+
 complexity = get_complexity(plt)
 
 print('complexity score: {}'.format(complexity))

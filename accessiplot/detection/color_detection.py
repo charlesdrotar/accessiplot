@@ -2,12 +2,11 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 from matplotlib.colors import to_rgb
-import matplotlib
 import colorsys
 from colorthief import ColorThief
-
 from colorspacious import cspace_convert
 from colorspacious import deltaE
+
 
 __all__ = [
     'get_common_colors_from_image',
@@ -65,7 +64,7 @@ def get_common_colors_from_plot(plot):
     return lines_colors
 
 
-def convert_image(img, color_vision_deficiency: str ="deuteranomaly", severity: int = 100):
+def convert_image(img, color_vision_deficiency: str = "deuteranomaly", severity: int = 100):
     """
     Given an image,
     simulate how a person with color vision deficiency will see it.
@@ -90,12 +89,12 @@ def convert_image(img, color_vision_deficiency: str ="deuteranomaly", severity: 
     assert color_vision_deficiency in ["deuteranomaly", "protanomaly",
                                        "tritanomaly"]
     assert severity > 0 and severity <= 100
-    
+
     cvd_space = {"name": "sRGB1+CVD",
                  "cvd_type": color_vision_deficiency,
                  "severity": severity}
 
-    result_image = cspace_convert(img, cvd_space, "sRGB1")#.astype('uint8')
+    result_image = cspace_convert(img, cvd_space, "sRGB1")  # .astype('uint8')
     return result_image
 
 
@@ -109,10 +108,10 @@ def display_images(old, new):
     odd: arr
         An array-like of colors representing an image.
     new: tuple
-        A tuple of array-like of colors, 
+        A tuple of array-like of colors,
         each representing an image.
     """
-    
+
     image_width = 3.0  # inches
     total_width = (1 + len(new)) * image_width
     height = image_width / old.shape[1] * old.shape[0]
@@ -144,17 +143,17 @@ def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
     threshold: int
         Threshold to detect if the Dealta-E value between two colors
         is below it.
-        
+
     Returns
     -------
     flag: bool
         Whether or not there exists a pair of colors in the given list
         that are too similar to each other.
-        
+
     References
     -------
     .. [1] https://www.colorwiki.com/wiki/Delta_E
-    
+
     """
 
     colors_array = np.array(colors)
@@ -170,13 +169,13 @@ def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
             if delta <= threshold:
                 print(delta)
                 if count == 0:
-                    print("For a person with {color_vision_deficiency}, those colors are too close to each other: ".format(color_vision_deficiency = color_vision_deficiency))
+                    print(f"For a person with {color_vision_deficiency}, those colors are too close to each other: ")
                 print(str(c1) + ' and ' + str(c2))
                 # TODO: add a parameter for detecting the markers / labels
                 count = count + 1
     flag = count != 0
     if not flag:
-        pass # TODO: should we print out a message saying everything is good?
+        pass  # TODO: should we print out a message saying everything is good?
     else:
         print("Ignore this warnings if for each line, the markers are different or the labels are present.")
     return flag
@@ -204,13 +203,13 @@ def full_detection(plt, threshold: int = 6):
         Whether or not there exists a pair of colors in the given list
         that are too similar to each other.
     """
-    
+
     file_name = "test.jpg"
     plt.savefig(file_name)
-    
+
     img = cspace_convert(plt.imread(file_name), "sRGB255", "sRGB1")
     print(np.unique(img))
-    
+
     cvd_list = ["deuteranomaly", "protanomaly", "tritanomaly"]
     colors = get_common_colors_from_plot(plt)
     simulations = []
@@ -219,10 +218,9 @@ def full_detection(plt, threshold: int = 6):
     for i in cvd_list:
         flag = flag or compare_colors(colors, i, 100, threshold)
         new_img = convert_image(img, i, 100)
-        #print(np.unique(new_img))
+        # print(np.unique(new_img))
         simulations.append(new_img)
-    
+
     display_images(img, tuple(simulations))
     os.remove(file_name)
     return flag
-
