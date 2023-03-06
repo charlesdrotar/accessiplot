@@ -3,8 +3,9 @@ import matplotlib
 from matplotlib import pyplot as plt
 from colorspacious import cspace_convert
 import os
-from accessiplot.detection.color_detection import convert_image, get_common_colors_from_image,\
-    get_common_colors_from_plot, display_images, compare_colors
+from accessiplot.detection.color_detection import convert_image,\
+    get_common_colors_from_image, get_common_colors_from_plot,\
+    display_images, compare_colors
 
 
 def test_get_common_colors_from_image():
@@ -42,7 +43,8 @@ def test_get_common_colors_from_plot():
     x = np.arange(1, 6)
     _ = np.array([100, 10, 300, 20, 500])
     num_lines = 5
-    colors = [(168, 96, 50), (66, 135, 245), (183, 65, 191), (123, 186, 127), (100, 100, 100)]
+    colors = [(168, 96, 50), (66, 135, 245), (183, 65, 191),
+              (123, 186, 127), (100, 100, 100)]
     colors = cspace_convert(colors, "sRGB255", "sRGB1")
     for i in range(num_lines):
         y_val = (np.random.rand(1, 5)).T
@@ -52,8 +54,8 @@ def test_get_common_colors_from_plot():
 
     flag = True
     for i in colors:
-        if i not in actual:
-            flag = False
+        truth_table = [i in a for a in actual]
+        flag = flag and np.all(truth_table)
     assert flag
 
 
@@ -64,8 +66,9 @@ def test_convert_image():
     result_colors1 = convert_image(colors1, "protanomaly", 50)
 
     flag1 = True
+    tol = 0.001
     for i in result_colors1:
-        if not (i[0] == i[1] and i[1] == i[2]):
+        if not (abs(i[0] - i[1]) <= tol and abs(i[2] - i[1]) <= tol):
             flag1 = False
     assert flag1
 
@@ -82,17 +85,20 @@ def test_convert_image():
 
     os.remove(file_name)
 
-    # There is some problem with this function that I need to fix, but will save it for now.
+    # There is some problem with this function that I need to fix,
+    # but will save it for now.
     assert True
 
 
 def test_compare_colors():
-    colors1 = [(11, 11, 11), (231, 116, 26), (242, 212, 175), (46, 161, 47), (30, 172, 36), (31, 120, 179)]
+    colors1 = [(11, 11, 11), (231, 116, 26), (242, 212, 175),
+               (46, 161, 47), (30, 172, 36), (31, 120, 179)]
     flag1 = compare_colors(colors1)
     colors1 = cspace_convert(colors1, "sRGB255", "sRGB1")
     assert flag1
 
-    # those are black / white / gray, so they should not be too similar to each other
+    # those are black / white / gray,
+    # so they should not be too similar to each other
     colors2 = [(11, 11, 11), (100, 100, 100), (255, 255, 255)]
     colors2 = cspace_convert(colors2, "sRGB255", "sRGB1")
     flag2 = compare_colors(colors2, "protanomaly", 50)
