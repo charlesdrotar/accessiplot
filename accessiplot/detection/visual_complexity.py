@@ -32,7 +32,7 @@ def get_complexity(plt, threshold: float = 0.5):
     lines = [line.get_data() for line in axes_object.lines]
     # print(lines)
     for line in lines:
-        score = score + pae_meas.pae(line[1])
+        score = score + pae_means.pae(line[1])
     score = score * len(lines)
     if score >= threshold:
         print('The line chart has a high visual complexity score:')
