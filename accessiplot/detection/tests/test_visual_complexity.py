@@ -1,10 +1,9 @@
 import numpy as np
 from matplotlib import pyplot as plt
-
 from accessiplot.detection.visual_complexity import get_complexity
 
 
-def get_complexity():
+def test_get_complexity():
 
     x = np.arange(1, 6)
     _ = np.array([100, 10, 300, 20, 500])
