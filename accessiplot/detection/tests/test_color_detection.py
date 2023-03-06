@@ -4,8 +4,8 @@ from matplotlib import pyplot as plt
 from colorspacious import cspace_convert
 import os
 from accessiplot.detection.color_detection import convert_image,\
-    get_common_colors_from_image, get_common_colors_from_plot,\
-    display_images, compare_colors
+    get_common_colors_from_image, display_images, compare_colors
+# get_common_colors_from_plot
 
 
 def test_get_common_colors_from_image():
@@ -59,12 +59,10 @@ def test_get_common_colors_from_plot():
             flag = False
             break
     '''
-    
     assert True
 
 
 def test_convert_image():
-    
     colors1 = [(11, 11, 11), (100, 100, 100), (255, 255, 255)]
     colors1 = cspace_convert(colors1, "sRGB255", "sRGB1")
     result_colors1 = convert_image(colors1, "protanomaly", 50)
