@@ -8,7 +8,7 @@ using the `accessiplot.detection.visual_complexity` module.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from accessiplot.detection.contrast_ratio import get_complexity
+from accessiplot.detection.visual_complexity import get_complexity
 
 x = np.arange(1, 6)
 y = np.array([100, 10, 300, 20, 500])
