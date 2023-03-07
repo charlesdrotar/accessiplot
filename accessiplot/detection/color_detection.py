@@ -13,7 +13,8 @@ __all__ = [
     'get_common_colors_from_plot',
     'convert_image',
     'display_images',
-    'compare_colors'
+    'compare_colors',
+    'full_detection'
 ]
 
 
