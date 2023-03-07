@@ -13,7 +13,8 @@ __all__ = [
     'get_common_colors_from_plot',
     'convert_image',
     'display_images',
-    'compare_colors'
+    'compare_colors',
+    'full_detection'
 ]
 
 
@@ -151,7 +152,7 @@ def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
         that are too similar to each other.
 
     References
-    -------
+    ----------
     .. [1] https://www.colorwiki.com/wiki/Delta_E
 
     """

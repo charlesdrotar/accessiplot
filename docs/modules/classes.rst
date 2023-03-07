@@ -32,6 +32,19 @@ Contrast Ratio Detection
     contrast_ratio.calculate_relative_luminance
     contrast_ratio.normalize
 
+Color Detection
+***************
+.. autosummary::
+    :toctree: generated/
+    :template: function.rst
+
+    color_detection.get_common_colors_from_image
+    color_detection.get_common_colors_from_plot
+    color_detection.convert_image
+    color_detection.display_images
+    color_detection.compare_colors
+    color_detection.full_detection
+
 Missing Label Detection
 ***********************
 
@@ -49,6 +62,13 @@ Missing Marker Detection
 
     marker.get_markers
 
+Overcomplexity Detection
+************************
+.. autosummary::
+    :toctree: generated/
+    :template: function.rst
+
+    visual_complexity.get_complexity
 
 Detection Handler Classes
 *************************
