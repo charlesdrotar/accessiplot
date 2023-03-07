@@ -1,0 +1,19 @@
+/* Set Hypertext links on Index Page to black */
+a.reference.internal span.std.std-ref {
+    color: #000000;
+}
+
+/* READTHEDOCS ONLY: Set github text to black */
+a.fa.fa-github {
+    color: #000000;
+}
+
+/* LOCALDEVELOPMENT ONLY: Set 'View page source' text to black*/
+li.wy-breadcrumbs-aside a{
+    color: #000000;
+}
+
+/* LOCALDEVELOPMENT ONLY: Set 'View page source' text to black visited*/
+li.wy-breadcrumbs-aside a:visited{
+    color: #000000;
+}
