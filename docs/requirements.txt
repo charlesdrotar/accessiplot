@@ -3,3 +3,6 @@ numpydoc
 sphinx
 sphinx-rtd-theme
 sphinx-gallery
+colorthief
+colorspacious
+pae
