@@ -90,3 +90,4 @@ def setup(app):
         app.add_css_file(pth)
 
     adds('css/fields.css')  # for parameters, etc.
+    adds('css/hypertext_links.css')  # for hypertext links, etc.
