@@ -14,6 +14,7 @@ Contents
    API Reference <./modules/classes.rst>
    User Guide <./user_guide.rst>
    Examples <./auto_examples/index.rst>
+   Overview <./overview.rst>
 
 
 Quick refs, indices and tables
@@ -23,3 +24,4 @@ Helpful sections to get started:
 
 * :ref:`api_ref`
 * :ref:`contrib`
+* :ref:`overview`
