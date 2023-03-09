@@ -3,9 +3,9 @@
 User Guide
 ==========
 
-.. _installation:
+.. _contributing:
 
-Installation
+Contributing
 ------------
 
 .. toctree::
