@@ -25,3 +25,4 @@ Helpful sections to get started:
 * :ref:`api_ref`
 * :ref:`contrib`
 * :ref:`overview`
+* :ref:`examples`
