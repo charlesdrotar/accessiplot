@@ -3,15 +3,12 @@ name: Publish Python 🐍 distributions 📦 to PyPI and TestPyPI
 on:
   push:
     branches: [ "main" ]
-    tags: '*'
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   build-and-deploy:
+
     strategy:
       matrix:
         python3-minor-version: [8, 9, 10, 11]
