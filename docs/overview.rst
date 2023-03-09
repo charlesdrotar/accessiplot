@@ -54,6 +54,7 @@ We currently have 4 different different detections implemented:
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 **Supported Graph Types:**
+
 - Line Charts
 
 Using `Pixel Approximate Entropy`_ we use this score as a measure to determine if the 
@@ -65,6 +66,7 @@ adequate alternative text a harder task as well.
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 **Supported Graph Types:**
+
 - Line Charts
 - Histograms
 
@@ -77,6 +79,7 @@ values that leads to the contrast ratio
 <<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 **Supported Graph Types:**
+
 - Line Charts
 - Histograms
 
@@ -88,6 +91,7 @@ to decipher complex graphs easily.
 <<<<<<<<<<<<<<<<<<<
 
 **Supported Graph Types:**
+
 - Line Charts
 - Histograms
 
