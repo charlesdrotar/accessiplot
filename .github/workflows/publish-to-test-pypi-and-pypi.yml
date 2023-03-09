@@ -17,6 +17,20 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        python3-minor-version: [7, 8, 9, 10, 11]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHON_VERSION: ${{ format('3.{0}', matrix.python3-minor-version) }}
+      PYTHON_EXECUTABLE: ${{ format('cp3{0}', matrix.python3-minor-version) }}
+
+    runs-on: ${{ matrix.os }}
+    name: Build and Deploy (${{ matrix.os }}, 3.${{ matrix.python3-minor-version }})
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
