@@ -1,0 +1,54 @@
+name: Publish Python 🐍 distributions 📦 to PyPI and TestPyPI
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: '*'
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    strategy:
+      matrix:
+        python3-minor-version: [8, 9, 10, 11]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHON_VERSION: ${{ format('3.{0}', matrix.python3-minor-version) }}
+      PYTHON_EXECUTABLE: ${{ format('cp3{0}', matrix.python3-minor-version) }}
+
+    runs-on: ${{ matrix.os }}
+    name: Build and Deploy (${{ matrix.os }}, 3.${{ matrix.python3-minor-version }})
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+   - name: Install pypa/build
+      run: >-
+        python -m
+        pip install
+        build
+        --user
+    - name: Build a binary wheel and a source tarball
+      run: >-
+        python -m
+        build
+        --sdist
+        --wheel
+        --outdir dist/
+        .
+    - name: Publish distribution 📦 to Test PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
+    - name: Publish distribution 📦 to PyPI
+      if: startsWith(github.ref, 'refs/tags')
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
