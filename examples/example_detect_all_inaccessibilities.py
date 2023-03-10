@@ -24,3 +24,5 @@ for _ in range(num_lines):
 
 dh = DetectionHandler(ax=ax)
 dh.run_detections(run_detections_list=DetectionTypes.ALL())
+
+print(dh.detections)
