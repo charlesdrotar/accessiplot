@@ -88,4 +88,4 @@ def test_label_detection_histogram(labels, expected):
     dh.run_detections(run_detections_list=[DetectionTypes.LABEL.name])
 
     print(dh.detections, expected)
-    assert dh.detections['label'] == expected
+    assert dh.detections[DetectionTypes.LABEL.name] == expected
