@@ -7,9 +7,9 @@ class ExtendedEnum(Enum):
     """
     Extend the functionality of the Enum class to have a means to get all values.
     """
-    @classmethod
-    def ALL(cls):
-        return list(map(lambda c: c.name, cls))
+    @property
+    def ALL(self):
+        return list(map(lambda c: c.name, self))
 
 
 class DetectionTypes(ExtendedEnum):
