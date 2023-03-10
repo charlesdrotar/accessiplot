@@ -168,7 +168,6 @@ def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
             c2 = new_colors_array[j]
             delta = deltaE(c1, c2, input_space="sRGB1")
             if delta <= threshold:
-                print(delta)
                 if count == 0:
                     print(f"For a person with {color_vision_deficiency}, those colors are too close to each other: ")
                 print(str(c1) + ' and ' + str(c2))
@@ -213,7 +212,6 @@ def full_detection(plt, threshold: int = 6, show_comparison_plots: bool = False)
     plt.savefig(file_name)
 
     img = cspace_convert(plt.imread(file_name), "sRGB255", "sRGB1")
-    print(np.unique(img))
 
     cvd_list = ["deuteranomaly", "protanomaly", "tritanomaly"]
     detections = {k: v for (k, v) in zip(cvd_list, [{}, {}, {}])}
