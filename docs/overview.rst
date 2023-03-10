@@ -102,7 +102,11 @@ would see if they were to look at a given chart.
 Disability Justice Perspective
 ------------------------------
 
-Disability Justice Perspective– 1 paragraph: How did a disability studies perspective inform your project?
+The disability justice principle that informed our project is collective access. 
+Currently, there lacks a solution for enforcing accessibility guidelines on Python visualizations, 
+which makes it difficult for people with disabilities to access the information embedded on those visualizations. 
+Therefore, we are developing this package in the hope that nobody will not be left behind by this pervasive and 
+important form of conveying information. 
 
 
 Learnings and Future Work
