@@ -42,7 +42,20 @@ not **ADDRESSING** issues.
 Related Work
 ------------
 
-Related Work– 1-3 paragraphs: Talk about relevant work that closely connects with your project.
+Data visualization is the process of transforming data into graphics. Those visual representations make 
+it easier for people to understand and interpret complex data. However, as its name suggests, 
+visualizations mainly make use of visual cues to convey information. This makes it difficult for 
+people with disabilities to access the information embedded in visualizations. As `Léonie Watson`_ ,
+a screen reader user said at the `Accessibility Fireside Chat`_ : *"One of the hardest things I've discovered 
+about trying to use or access data visualizations is the amount of information I need to keep in my head to 
+be able to make sense of it."*
+
+As an attempt to detect the accessibility issues in Python visualizations, Accessiplot is inspired by the existing
+effort of making data visualizations more accessible in both the design and the development phase. For example,
+we refer to the `Web Content Accessibility Guidelines (WCAG) for complex images`_ to determine which accessibility
+issues we should prioritize detecting, and how we should detect them. Moreover, our decision to take an infrastructure
+perspective (i.e., focus on *creating* accessible visualizations) instead of an individual approach is sparked by
+libraries that make JavaScript visualizations more accessible, such as `HighCharts`_ and `VoxLens`_ .
 
 
 Methodology
@@ -141,3 +154,8 @@ The goal of this library is to be an accessible library for accessibility.
 
 .. _WAVE online accessibility tool: https://wave.webaim.org/
 .. _Pixel Approximate Entropy: https://doi.org/10.48550/arXiv.1811.03180
+.. _Léonie Watson: https://tink.uk/
+.. _Accessibility Fireside Chat: https://www.youtube.com/watch?v=Aqx5PQwds80&t=401s
+.. _Web Content Accessibility Guidelines (WCAG) for complex images: https://www.w3.org/WAI/tutorials/images/complex/
+.. _HighCharts: https://www.highcharts.com/docs/accessibility/accessibility-module
+.. _VoxLens: https://github.com/athersharif/voxlens
