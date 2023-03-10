@@ -63,7 +63,7 @@ class DetectionHandler():
 
         detections = {}
         if DetectionTypes.CONTRAST_RATIO.name in run_detections_list:
-            _, _, contrast_detections = calculate_contrast_ratios_from_ax(self)
+            self.contrast_ratios_by_index, self.colors_by_index, contrast_detections = calculate_contrast_ratios_from_ax(self)
             detections[DetectionTypes.CONTRAST_RATIO.name] = contrast_detections
         if DetectionTypes.LABEL.name in run_detections_list:
             _, _, _, label_detections = get_missing_labels_from_ax(self)
