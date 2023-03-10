@@ -23,4 +23,4 @@ for _ in range(num_lines):
     ax.plot(x, y_val)
 
 dh = DetectionHandler(ax=ax)
-dh.run_detections(run_detections_list=DetectionTypes.ALL)
+dh.run_detections(run_detections_list=DetectionTypes.ALL())

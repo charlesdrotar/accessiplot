@@ -7,7 +7,7 @@ class ExtendedEnum(Enum):
     """
     Extend the functionality of the Enum class to have a means to get all values.
     """
-    @property
+    @classmethod
     def ALL(self):
         return list(map(lambda c: c.name, self))
 
