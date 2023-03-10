@@ -188,7 +188,6 @@ def calculate_contrast_ratio_lines(dh: DetectionHandler):
                 right = lines[j].get_label()
             else:
                 right = BACKGROUND
-            print("key and indices:", i, left, j, right)
             key = f'{left}{DELIMITER}{right}'
             contrast_ratios_by_index[key] = \
                 calculate_contrast_ratio(colors[i], colors[j])
