@@ -168,7 +168,6 @@ def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
             c2 = new_colors_array[j]
             delta = deltaE(c1, c2, input_space="sRGB1")
             if delta <= threshold:
-                print(delta)
                 if count == 0:
                     print(f"For a person with {color_vision_deficiency}, those colors are too close to each other: ")
                 print(str(c1) + ' and ' + str(c2))
@@ -182,8 +181,7 @@ def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
     return flag
 
 
-def full_detection(plt, threshold: int = 6):
-
+def full_detection(plt, threshold: int = 6, show_comparison_plots: bool = False):
     """
     Given a line chart,
     detect if its use of color is unfriendly to people with
@@ -197,31 +195,40 @@ def full_detection(plt, threshold: int = 6):
     threshold: int
         Threshold to detect if the Dealta-E value between two colors
         is below it.
-
+    show_comparison_plots: bool
+        Switch to toggle whether to plot comparisons as part of the
+        detection.
     Returns
     -------
     flag: bool
         Whether or not there exists a pair of colors in the given list
         that are too similar to each other.
+    detections: dict
+        A dictionary that represents which color vision deficiency
+        had a detection.
     """
 
     file_name = "test.jpg"
     plt.savefig(file_name)
 
     img = cspace_convert(plt.imread(file_name), "sRGB255", "sRGB1")
-    print(np.unique(img))
 
     cvd_list = ["deuteranomaly", "protanomaly", "tritanomaly"]
+    detections = {k: v for (k, v) in zip(cvd_list, [{}, {}, {}])}
     colors = get_common_colors_from_plot(plt)
     simulations = []
 
     flag = False
-    for i in cvd_list:
-        flag = flag or compare_colors(colors, i, 100, threshold)
-        new_img = convert_image(img, i, 100)
-        # print(np.unique(new_img))
+    for cvd in cvd_list:
+        is_an_accessibility_issue = compare_colors(colors, cvd, 100, threshold)
+        if is_an_accessibility_issue:
+            detections[cvd] = is_an_accessibility_issue
+        flag = flag or is_an_accessibility_issue
+        new_img = convert_image(img, cvd, 100)
         simulations.append(new_img)
 
-    display_images(img, tuple(simulations))
-    os.remove(file_name)
-    return flag
+    if show_comparison_plots:
+        display_images(img, tuple(simulations))
+
+    os.remove(file_name)  # clean up tmp file.
+    return flag, detections

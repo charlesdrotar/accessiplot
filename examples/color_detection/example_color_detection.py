@@ -18,4 +18,7 @@ for i in range(num_lines):
     y_val = (np.random.rand(1, 5)).T
     plt.plot(x, y_val)
 
-print(full_detection(plt, ))
+are_issues, detections = full_detection(plt, )
+
+print("Are issues present:", are_issues)
+print("Detections:", detections)

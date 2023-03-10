@@ -13,6 +13,9 @@ __all__ = [
     'normalize'
 ]
 
+DELIMITER = "_---_"
+BACKGROUND = "BACKGROUND"
+
 
 def is_contrast_ratio_below_threshold(contrast_ratio: float, threshold: float = 2.5):
     """
@@ -124,11 +127,11 @@ def calculate_contrast_ratio_histogram(dh: DetectionHandler):
 
     for i in range(len(colors)):
         for j in range(len(colors)):
-            contrast_ratios_by_index[f'{i}_{j}'] = \
+            contrast_ratios_by_index[f'{i}{DELIMITER}{j}'] = \
                 calculate_contrast_ratio(colors[i], colors[j])
 
     for key in contrast_ratios_by_index.keys():
-        ind_str1, ind_str2 = key.split("_")
+        ind_str1, ind_str2 = key.split(DELIMITER)
         if ind_str1 == ind_str2:
             continue  # Don't do self-analysis for contrast ratio.
         if is_contrast_ratio_below_threshold(contrast_ratios_by_index[key]):
@@ -167,7 +170,9 @@ def calculate_contrast_ratio_lines(dh: DetectionHandler):
         Dictionary where the key is the indices of the lines/background being compared
         and the value is the contrast ratio as a float.
     """
-    colors = [to_rgb(line.get_color()) for line in dh.ax.lines]
+
+    lines = dh.ax.lines
+    colors = [to_rgb(line.get_color()) for line in lines]
     colors.append(to_rgb(dh.ax.get_facecolor()))
 
     contrast_ratios_by_index = {}
@@ -175,11 +180,20 @@ def calculate_contrast_ratio_lines(dh: DetectionHandler):
 
     for i in range(len(colors)):
         for j in range(len(colors)):
-            contrast_ratios_by_index[f'{i}_{j}'] = \
+            if i != len(lines):
+                left = lines[i].get_label()
+            else:
+                left = BACKGROUND
+            if j != len(lines):
+                right = lines[j].get_label()
+            else:
+                right = BACKGROUND
+            key = f'{left}{DELIMITER}{right}'
+            contrast_ratios_by_index[key] = \
                 calculate_contrast_ratio(colors[i], colors[j])
 
     for key in contrast_ratios_by_index.keys():
-        ind_str1, ind_str2 = key.split("_")
+        ind_str1, ind_str2 = key.split(DELIMITER)
         if ind_str1 == ind_str2:
             continue  # Don't do self-analysis for contrast ratio.
         if is_contrast_ratio_below_threshold(contrast_ratios_by_index[key]):

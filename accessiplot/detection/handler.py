@@ -1,8 +1,18 @@
 from enum import Enum
 from accessiplot.utils.chart_type import determine_chart_type
+import matplotlib.pyplot as plt
 
 
-class DetectionTypes(Enum):
+class ExtendedEnum(Enum):
+    """
+    Extend the functionality of the Enum class to have a means to get all values.
+    """
+    @classmethod
+    def ALL(self):
+        return list(map(lambda c: c.name, self))
+
+
+class DetectionTypes(ExtendedEnum):
     """
     Enum used to keep track of supported detection tests.
     """
@@ -10,6 +20,7 @@ class DetectionTypes(Enum):
     LABEL = 2  # i.e. missing labels
     MARKER = 4  # i.e. missing markers
     COLOR = 8  # i.e. Color-blindness
+    OVERCOMPLEXITY = 16  # i.e. overly complex graph.
 
 
 class DetectionHandler():
@@ -48,13 +59,20 @@ class DetectionHandler():
 
         from accessiplot.detection.contrast_ratio import calculate_contrast_ratios_from_ax
         from accessiplot.detection.label import get_missing_labels_from_ax
+        from accessiplot.detection.color_detection import full_detection
 
         detections = {}
         if DetectionTypes.CONTRAST_RATIO.name in run_detections_list:
             self.contrast_ratios_by_index, self.colors_by_index, contrast_detections = calculate_contrast_ratios_from_ax(self)
-            detections['contrast'] = contrast_detections
+            detections[DetectionTypes.CONTRAST_RATIO.name] = contrast_detections
         if DetectionTypes.LABEL.name in run_detections_list:
             _, _, _, label_detections = get_missing_labels_from_ax(self)
-            detections['label'] = label_detections
+            detections[DetectionTypes.LABEL.name] = label_detections
+        if DetectionTypes.COLOR.name in run_detections_list:
+            _, color_detections = full_detection(plt=plt)
+            detections[DetectionTypes.COLOR.name] = color_detections
+        if DetectionTypes.OVERCOMPLEXITY.name in run_detections_list:
+            pass
+            # detections[DetectionTypes.OVERCOMPLEXITY.name] = {}
 
         self.detections = detections
