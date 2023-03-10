@@ -1,5 +1,7 @@
 from enum import Enum
 from accessiplot.utils.chart_type import determine_chart_type
+import matplotlib.pyplot as plt
+
 
 class ExtendedEnum(Enum):
     """
@@ -8,6 +10,7 @@ class ExtendedEnum(Enum):
     @classmethod
     def ALL(cls):
         return list(map(lambda c: c.name, cls))
+
 
 class DetectionTypes(ExtendedEnum):
     """
@@ -60,16 +63,16 @@ class DetectionHandler():
 
         detections = {}
         if DetectionTypes.CONTRAST_RATIO.name in run_detections_list:
-            self.contrast_ratios_by_index, self.colors_by_index, contrast_detections = calculate_contrast_ratios_from_ax(self)
+            _, _, contrast_detections = calculate_contrast_ratios_from_ax(self)
             detections[DetectionTypes.CONTRAST_RATIO.name] = contrast_detections
         if DetectionTypes.LABEL.name in run_detections_list:
             _, _, _, label_detections = get_missing_labels_from_ax(self)
             detections[DetectionTypes.LABEL.name] = label_detections
         if DetectionTypes.COLOR.name in run_detections_list:
-            pass
-            #detections[DetectionTypes.COLOR.name] = {}
+            _, color_detections = full_detection(plt=plt)
+            detections[DetectionTypes.COLOR.name] = color_detections
         if DetectionTypes.OVERCOMPLEXITY.name in run_detections_list:
             pass
-            #detections[DetectionTypes.OVERCOMPLEXITY.name] = {}
+            # detections[DetectionTypes.OVERCOMPLEXITY.name] = {}
 
         self.detections = detections

@@ -182,8 +182,7 @@ def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
     return flag
 
 
-def full_detection(plt, threshold: int = 6, show_comparison_plots = False):
-
+def full_detection(plt, threshold: int = 6, show_comparison_plots: bool = False):
     """
     Given a line chart,
     detect if its use of color is unfriendly to people with
@@ -217,7 +216,7 @@ def full_detection(plt, threshold: int = 6, show_comparison_plots = False):
     print(np.unique(img))
 
     cvd_list = ["deuteranomaly", "protanomaly", "tritanomaly"]
-    detections = { k:v for (k,v) in zip(cvd_list, [{},{},{}])}
+    detections = {k: v for (k, v) in zip(cvd_list, [{}, {}, {}])}
     colors = get_common_colors_from_plot(plt)
     simulations = []
 
@@ -232,6 +231,6 @@ def full_detection(plt, threshold: int = 6, show_comparison_plots = False):
 
     if show_comparison_plots:
         display_images(img, tuple(simulations))
-    
+
     os.remove(file_name)  # clean up tmp file.
     return flag, detections
