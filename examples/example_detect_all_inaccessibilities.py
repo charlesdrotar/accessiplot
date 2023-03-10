@@ -22,5 +22,5 @@ for _ in range(num_lines):
     y_val = (np.random.rand(1, 10)).T
     ax.plot(x, y_val)
 
-dh = DetectionHandler(ax=None)
+dh = DetectionHandler(ax=ax)
 dh.run_detections(run_detections_list=DetectionTypes.ALL)
