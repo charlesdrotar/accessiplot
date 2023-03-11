@@ -12,7 +12,9 @@ from accessiplot.detection.handler import DetectionHandler, DetectionTypes
             ['_child0', '_child1', '', ''],
             {
                 'lines': {0: '_child0', 1: '_child1'},
-                'axes': {'x': '', 'y': ''}
+                'axes': {'x': '', 'y': ''},
+                'title': '',
+                'legend': None
             }
         ),
         # All labels present
@@ -55,7 +57,9 @@ def test_label_detection_lines(num_lines, labels, expected):
             ['', ''],
             {
                 'bins': {},
-                'axes': {'x': '', 'y': ''}
+                'axes': {'x': '', 'y': ''},
+                'title': '',
+                'legend': None
             }
         ),
         # All labels present

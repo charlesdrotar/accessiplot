@@ -21,6 +21,7 @@ x = np.arange(1, 11)
 
 _ = plt.figure()
 ax = plt.axes()
+ax.legend()
 
 # Reset the figure so that tests start with a fresh figure.
 for _ in range(num_lines):
@@ -29,8 +30,7 @@ for _ in range(num_lines):
 
 ax.set_xlabel(x_axis)
 ax.set_ylabel(y_axis)
-print("Default title:", ax.get_title())
-print("Default legend:", ax.get_legend())
+ax.set_title(title)
 
 dh = DetectionHandler(ax=ax)
 dh.run_detections(run_detections_list=[DetectionTypes.LABEL.name])

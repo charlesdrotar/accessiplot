@@ -73,6 +73,8 @@ def get_missing_labels_lines(dh: DetectionHandler):
     detections = {"lines": {}, "axes": {}}
     x_label = dh.ax.get_xlabel()
     y_label = dh.ax.get_ylabel()
+    legend = dh.ax.get_legend()
+    title = dh.ax.get_title()
 
     for i in range(len(labels)):
         label = labels[i]
@@ -80,11 +82,15 @@ def get_missing_labels_lines(dh: DetectionHandler):
         if label.startswith('_child'):
             detections["lines"][i] = label
 
-    # Check if the x and y axes of the plot are empty strings.
-    if dh.ax.get_xlabel() == "":
+    # Check default values and log detections
+    if x_label == "":
         detections["axes"]["x"] = ""
-    if dh.ax.get_ylabel() == "":
+    if y_label == "":
         detections["axes"]["y"] = ""
+    if title == "":
+        detections["title"] = ""
+    if legend is None:
+        detections["legend"] = None
 
     return labels, x_label, y_label, detections
 
