@@ -9,16 +9,18 @@ from accessiplot.detection.handler import DetectionHandler, DetectionTypes
         # Empty labels
         pytest.param(
             2,
-            ['_child0', '_child1', '', ''],
+            [False, '', '_child0', '_child1', '', ''],
             {
                 'lines': {0: '_child0', 1: '_child1'},
-                'axes': {'x': '', 'y': ''}
+                'axes': {'x': '', 'y': ''},
+                'title': '',
+                'legend': None
             }
         ),
         # All labels present
         pytest.param(
             2,
-            ['plot0', 'plot1', 'x', 'y'],
+            [True, 'My Title', 'plot0', 'plot1', 'x', 'y'],
             {
                 'lines': {},
                 'axes': {}
@@ -35,12 +37,15 @@ def test_label_detection_lines(num_lines, labels, expected):
     ax = plt.axes()
     for _ in range(num_lines):
         y_val = (np.random.rand(1, 10)).T
-        ax.plot(x, y_val, label=labels[_])
+        ax.plot(x, y_val, label=labels[_ + 2])
 
     # Set axes labels for testing
 
     ax.set_xlabel(labels[-2])
     ax.set_ylabel(labels[-1])
+    ax.set_title(labels[1])
+    if labels[0]:
+        ax.legend()
     dh = DetectionHandler(ax=ax)
     dh.run_detections(run_detections_list=[DetectionTypes.LABEL.name])
 
@@ -52,15 +57,17 @@ def test_label_detection_lines(num_lines, labels, expected):
     'labels, expected', [
         # Empty labels
         pytest.param(
-            ['', ''],
+            [False, '', '', ''],
             {
                 'bins': {},
-                'axes': {'x': '', 'y': ''}
+                'axes': {'x': '', 'y': ''},
+                'title': '',
+                'legend': None
             }
         ),
         # All labels present
         pytest.param(
-            ['x', 'y'],
+            [True, 'My Title', 'x', 'y'],
             {
                 'bins': {},
                 'axes': {}
@@ -84,6 +91,9 @@ def test_label_detection_histogram(labels, expected):
 
     ax.set_xlabel(labels[-2])
     ax.set_ylabel(labels[-1])
+    ax.set_title(labels[1])
+    if labels[0]:
+        ax.legend()
     dh = DetectionHandler(ax=ax)
     dh.run_detections(run_detections_list=[DetectionTypes.LABEL.name])
 
