@@ -7,6 +7,7 @@ write the output as a JSON.
 """
 
 from accessiplot.detection.handler import DetectionHandler, DetectionTypes
+from accessiplot.utils.logger import LOGGING_PATH
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -28,3 +29,8 @@ dh.run_detections(run_detections_list=DetectionTypes.ALL())
 
 for key in dh.detections.keys():
     print(key, ":", dh.detections[key])
+
+# Print contents of log file
+with open('readme.txt') as f:
+    lines = f.readlines(LOGGING_PATH)
+    print(f"LOGS:\n{lines}")
