@@ -39,5 +39,5 @@ def get_complexity(plt, threshold: float = 0.5):
     if score >= threshold:
         logger.warning('The line chart has a high visual complexity score:\n"\
                      "threshold = {} v.s. actual = {}.'.format(threshold, score))
-        detections
+        detections = {"Pixel Approximate Entropy": score, "threshold": threshold}
     return score, detections
