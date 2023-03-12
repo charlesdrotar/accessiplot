@@ -10,7 +10,7 @@ LOGGER_NAME = "accessiplot_logger"
 LOGGING_DIRECTORY = ".accessiplot_logs"
 LOGGING_PATH = os.path.join(LOGGING_DIRECTORY, LOGFILE_NAME)
 
-# Attempt to make the logging directory 
+# Attempt to make the logging directory
 try:
     os.mkdir(LOGGING_DIRECTORY)
 except FileExistsError:

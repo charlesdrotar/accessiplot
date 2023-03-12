@@ -170,7 +170,7 @@ def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
             delta = deltaE(c1, c2, input_space="sRGB1")
             if delta <= threshold:
                 if count == 0:
-                    logger.warning(f"For a person with {color_vision_deficiency}, those colors are too close to each other:\n"\
+                    logger.warning(f"For a person with {color_vision_deficiency}, those colors are too close to each other:\n"
                                    "str(c1) + ' and ' + str(c2)")
                 # TODO: add a parameter for detecting the markers / labels
                 count = count + 1
