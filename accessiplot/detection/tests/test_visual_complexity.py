@@ -1,6 +1,6 @@
-import numpy as np
-from matplotlib import pyplot as plt
 from accessiplot.detection.visual_complexity import get_complexity
+from matplotlib import pyplot as plt
+import numpy as np
 
 
 def test_get_complexity():

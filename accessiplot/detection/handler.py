@@ -1,5 +1,6 @@
-from enum import Enum
 from accessiplot.utils.chart_type import determine_chart_type
+from accessiplot.utils.logger import logger
+from enum import Enum
 import matplotlib.pyplot as plt
 
 
@@ -60,19 +61,25 @@ class DetectionHandler():
         from accessiplot.detection.contrast_ratio import calculate_contrast_ratios_from_ax
         from accessiplot.detection.label import get_missing_labels_from_ax
         from accessiplot.detection.color_detection import full_detection
+        from accessiplot.detection.visual_complexity import get_complexity
 
+        # Run detection cases based on which were selected by user.
         detections = {}
         if DetectionTypes.CONTRAST_RATIO.name in run_detections_list:
+            logger.info(f"Running detections for '{DetectionTypes.CONTRAST_RATIO.name}'")
             self.contrast_ratios_by_index, self.colors_by_index, contrast_detections = calculate_contrast_ratios_from_ax(self)
             detections[DetectionTypes.CONTRAST_RATIO.name] = contrast_detections
         if DetectionTypes.LABEL.name in run_detections_list:
+            logger.info(f"Running detections for '{DetectionTypes.LABEL.name}'")
             _, _, _, label_detections = get_missing_labels_from_ax(self)
             detections[DetectionTypes.LABEL.name] = label_detections
         if DetectionTypes.COLOR.name in run_detections_list:
+            logger.info(f"Running detections for '{DetectionTypes.COLOR.name}'")
             _, color_detections = full_detection(plt=plt)
             detections[DetectionTypes.COLOR.name] = color_detections
         if DetectionTypes.OVERCOMPLEXITY.name in run_detections_list:
-            pass
-            # detections[DetectionTypes.OVERCOMPLEXITY.name] = {}
+            logger.info(f"Running detections for '{DetectionTypes.OVERCOMPLEXITY.name}'")
+            _, overcomplexity_detections = get_complexity(plt=plt)
+            detections[DetectionTypes.OVERCOMPLEXITY.name] = overcomplexity_detections
 
         self.detections = detections

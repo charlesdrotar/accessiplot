@@ -8,9 +8,10 @@ as well as the x and y labels of the axes themselves.
 The default values assigned by labels are defined in `labels`.
 """
 
-import numpy as np
-from matplotlib import pyplot as plt
 from accessiplot.detection.handler import DetectionHandler, DetectionTypes
+from matplotlib import pyplot as plt
+import numpy as np
+
 
 num_lines = 2
 labels = ['_child0', '_child1', '', '']

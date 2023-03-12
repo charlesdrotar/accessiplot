@@ -1,6 +1,6 @@
-import numpy as np
-from matplotlib import pyplot as plt
 from accessiplot.detection.marker import get_markers
+from matplotlib import pyplot as plt
+import numpy as np
 
 
 def test_marker_detection_works():

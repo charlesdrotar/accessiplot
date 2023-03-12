@@ -1,7 +1,7 @@
-import pytest
-import numpy as np
-from matplotlib import pyplot as plt
 from accessiplot.detection.handler import DetectionHandler, DetectionTypes
+from matplotlib import pyplot as plt
+import numpy as np
+import pytest
 
 
 @pytest.mark.parametrize(

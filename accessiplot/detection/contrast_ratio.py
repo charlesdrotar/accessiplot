@@ -1,7 +1,8 @@
-from matplotlib.colors import to_rgb
-import warnings
 from accessiplot.utils.chart_type import ChartTypes
 from accessiplot.detection.handler import DetectionHandler
+from matplotlib.colors import to_rgb
+import warnings
+
 
 __all__ = [
     'is_contrast_ratio_below_threshold',
