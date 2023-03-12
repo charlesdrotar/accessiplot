@@ -1,3 +1,4 @@
+from accessiplot.utils.logger import logger
 from pae import PAEMeasure
 
 __all__ = [
@@ -26,15 +27,17 @@ def get_complexity(plt, threshold: float = 0.5):
     ----------
     .. [1] https://doi.org/10.48550/arXiv.1811.03180
     """
+    detections = {}
     pae_means = PAEMeasure(300, 200)
     score = 0
     axes_object = plt.gca()
     lines = [line.get_data() for line in axes_object.lines]
     # print(lines)
     for line in lines:
-        score = score + pae_means.pae(line[1])
-    score = score * len(lines)
+        score += pae_means.pae(line[1])
+    score *= len(lines)
     if score >= threshold:
-        print('The line chart has a high visual complexity score:')
-        print('  threshold = {} v.s. actual = {}.'.format(threshold, score))
-    return score
+        logger.warning('The line chart has a high visual complexity score:\n"\
+                     "threshold = {} v.s. actual = {}.'.format(threshold, score))
+        detections = {"Pixel Approximate Entropy": score, "threshold": threshold}
+    return score, detections

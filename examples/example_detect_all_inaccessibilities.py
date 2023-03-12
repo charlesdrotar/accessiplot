@@ -6,9 +6,10 @@ This example shows how to detect all inaccessiblities and
 write the output as a JSON.
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
 from accessiplot.detection.handler import DetectionHandler, DetectionTypes
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 # data to be plotted
 x = np.arange(1, 11)

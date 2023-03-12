@@ -6,9 +6,10 @@ This example shows that all labels were detected
 and none were found to be missing.
 """
 
-import numpy as np
-from matplotlib import pyplot as plt
 from accessiplot.detection.handler import DetectionHandler, DetectionTypes
+from matplotlib import pyplot as plt
+import numpy as np
+
 
 num_lines = 2
 labels = ['plot0', 'plot1']

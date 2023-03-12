@@ -1,9 +1,9 @@
-import pytest
-import numpy as np
-from matplotlib.colors import to_rgb
-from matplotlib import pyplot as plt
 from accessiplot.detection.contrast_ratio import calculate_contrast_ratio
 from accessiplot.detection.handler import DetectionHandler, DetectionTypes
+from matplotlib import pyplot as plt
+from matplotlib.colors import to_rgb
+import numpy as np
+import pytest
 
 
 @pytest.mark.parametrize(

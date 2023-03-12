@@ -1,11 +1,10 @@
-import numpy as np
-import matplotlib
-from matplotlib import pyplot as plt
-from colorspacious import cspace_convert
-import os
 from accessiplot.detection.color_detection import convert_image,\
     get_common_colors_from_image, display_images, compare_colors
-# get_common_colors_from_plot
+from colorspacious import cspace_convert
+import matplotlib
+from matplotlib import pyplot as plt
+import numpy as np
+import os
 
 
 def test_get_common_colors_from_image():

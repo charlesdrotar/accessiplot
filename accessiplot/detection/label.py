@@ -1,6 +1,8 @@
-import warnings
 from accessiplot.detection.handler import DetectionHandler
 from accessiplot.utils.chart_type import ChartTypes
+from accessiplot.utils.logger import logger
+import warnings
+
 
 __all__ = [
     'get_missing_labels_from_ax',
@@ -39,14 +41,18 @@ def get_missing_labels_histograms(dh: DetectionHandler):
     legend = dh.ax.get_legend()
     title = dh.ax.get_title()
 
-    # Check if the x and y axes of the plot are empty strings.
+    # Check default values and log detections
     if x_label == "":
+        logger.warning("Missing x-axis label")
         detections["axes"]["x"] = ""
     if y_label == "":
+        logger.warning("Missing y-axis label")
         detections["axes"]["y"] = ""
     if title == "":
+        logger.warning("Missing plot title")
         detections["title"] = ""
     if legend is None:
+        logger.warning("Missing plot title")
         detections["legend"] = None
 
     return labels, x_label, y_label, detections
@@ -86,16 +92,21 @@ def get_missing_labels_lines(dh: DetectionHandler):
         label = labels[i]
         # '_child' is the default name for a label by matplotlib.
         if label.startswith('_child'):
+            logger.warning(f"Missing label for line#{i}:{label}")
             detections["lines"][i] = label
 
     # Check default values and log detections
     if x_label == "":
+        logger.warning("Missing x-axis label")
         detections["axes"]["x"] = ""
     if y_label == "":
+        logger.warning("Missing y-axis label")
         detections["axes"]["y"] = ""
     if title == "":
+        logger.warning("Missing plot title")
         detections["title"] = ""
     if legend is None:
+        logger.warning("Missing plot title")
         detections["legend"] = None
 
     return labels, x_label, y_label, detections

@@ -6,9 +6,10 @@ This example shows how to detect low contrast ratio in an image
 using the `accessiplot.detection.contrast_ratio` module.
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
 from accessiplot.detection.handler import DetectionHandler, DetectionTypes
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 # data to be plotted
 x = np.arange(1, 11)

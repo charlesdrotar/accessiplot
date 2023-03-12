@@ -1,11 +1,12 @@
-import numpy as np
-import os
-import matplotlib.pyplot as plt
-from matplotlib.colors import to_rgb
+from accessiplot.utils.logger import logger
 import colorsys
 from colorthief import ColorThief
 from colorspacious import cspace_convert
 from colorspacious import deltaE
+import matplotlib.pyplot as plt
+from matplotlib.colors import to_rgb
+import numpy as np
+import os
 
 
 __all__ = [
@@ -169,15 +170,15 @@ def compare_colors(colors, color_vision_deficiency: str = "deuteranomaly",
             delta = deltaE(c1, c2, input_space="sRGB1")
             if delta <= threshold:
                 if count == 0:
-                    print(f"For a person with {color_vision_deficiency}, those colors are too close to each other: ")
-                print(str(c1) + ' and ' + str(c2))
+                    logger.warning(f"For a person with {color_vision_deficiency}, those colors are too close to each other:\n"
+                                   "str(c1) + ' and ' + str(c2)")
                 # TODO: add a parameter for detecting the markers / labels
                 count = count + 1
     flag = count != 0
     if not flag:
         pass  # TODO: should we print out a message saying everything is good?
     else:
-        print("Ignore this warnings if for each line, the markers are different or the labels are present.")
+        logger.info("Ignore this warnings if for each line, the markers are different or the labels are present.")
     return flag
 
 
