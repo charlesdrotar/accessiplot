@@ -12,5 +12,5 @@ def test_get_complexity():
         y_val = (np.random.rand(1, 5)).T
         plt.plot(x, y_val)
 
-    complexity = get_complexity(plt)
+    complexity, _ = get_complexity(plt)
     assert complexity >= 0.5
