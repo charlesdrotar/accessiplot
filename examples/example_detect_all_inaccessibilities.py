@@ -31,6 +31,6 @@ for key in dh.detections.keys():
     print(key, ":", dh.detections[key])
 
 # Print contents of log file
-with open('readme.txt') as f:
-    lines = f.readlines(LOGGING_PATH)
+with open(LOGGING_PATH) as f:
+    lines = f.readlines()
     print(f"LOGS:\n{lines}")
